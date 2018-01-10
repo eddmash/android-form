@@ -1,12 +1,38 @@
 apply plugin: 'com.android.library'
 
+
+ext {
+    versionCode = 1
+    bintrayRepo = 'maven'
+    bintrayName = 'android-form'
+
+    publishedGroupId = 'com.eddmash'
+    libraryName = 'android-form'
+    artifact = 'android-form'
+
+    libraryDescription = 'A collection of Views.'
+
+    siteUrl = 'https://github.com/eddmash/android-form'
+    gitUrl = 'https://github.com/eddmash/android-form.git'
+
+    libraryVersion = "1.0.${versionCode}"
+
+    developerId = 'eddmash'
+    developerName = 'Eddilbert Macharia'
+    developerEmail = 'edd.cowan@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 25
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode project.versionCode
+        versionName "${libraryVersion}"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,3 +56,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
+//Add these lines to publish library to bintray
+//Place it at the end of the file
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
