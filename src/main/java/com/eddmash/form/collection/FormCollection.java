@@ -73,9 +73,9 @@ public class FormCollection implements FormCollectionInterface {
             InnerFormInterface form = this.getForm(name);
             boolean save = form.save();
             Log.e(getTag(), "SAVING "+name+ " STATUS "+save);
-            if (!save){
-                return false;
-            }
+//            if (!save){
+//                return false;
+//            }
         }
         return true;
     }
