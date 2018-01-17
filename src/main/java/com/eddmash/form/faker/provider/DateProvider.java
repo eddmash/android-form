@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public class DateProvider extends Provider {
     protected String dateFormat = "yyyy-MM-dd";
-    protected String timeFormat = "HH:mm:ss.SSS";
+    protected String timeFormat = "HH:mm:ss";
     public static final String TODAY = "today";
     public static final String TIME_NOW = "timeNow";
     private String type;

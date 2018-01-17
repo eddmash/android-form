@@ -1,4 +1,4 @@
-package com.eddmash.form;
+package com.eddmash.form.values;
 /*
 * This file is part of the Tools package.
 * 
@@ -8,7 +8,7 @@ package com.eddmash.form;
 * file that was distributed with this source code.
 */
 
-public interface SpinnerValueInterface<T> {
+public interface ValueInterface<T> {
     String getValue();
     String getLabel();
     T getItem() ;

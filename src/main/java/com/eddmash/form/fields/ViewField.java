@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.eddmash.form.FormException;
+import com.eddmash.form.values.ViewValue;
 import com.eddmash.views.CollectionView;
 
 public class ViewField extends BaseField {
@@ -44,7 +45,13 @@ public class ViewField extends BaseField {
             return ((TextView) view).getText();
         }
         if (view instanceof Spinner) {
-            return ((Spinner) view).getSelectedItem();
+            Object val = ((Spinner) view).getSelectedItem();
+            if (val instanceof ViewValue) {
+                val = ((ViewValue) val).getValue();
+            } else {
+                val = val + "";
+            }
+            return val;
         }
 
         // assumes CollectionView
@@ -63,8 +70,8 @@ public class ViewField extends BaseField {
                 ((EditText) view).setText(String.valueOf(val));
             }
         } else if (view instanceof Spinner) {
-            if (val != null) {
-                ((Spinner) view).setSelection(Integer.parseInt(String.valueOf(val)));
+            if (val != null && !String.valueOf(val).isEmpty()) {
+                ((Spinner) view).setSelection(getSpinnerValuePosition((Spinner) view, val));
             } else {
                 view.setSelected(false);
             }
@@ -74,6 +81,8 @@ public class ViewField extends BaseField {
             } else {
                 ((CompoundButton) view).setChecked(Boolean.valueOf(val.toString()));
             }
+        } else if (view instanceof CollectionView) {
+            ((CollectionView) view).setValue(val);
         } else {
 
             throw new FormException(String.format("Setting value for field '%s' of type not yet " +
@@ -96,4 +105,16 @@ public class ViewField extends BaseField {
         this.isEditable = isEditable;
     }
 
+    public int getSpinnerValuePosition(Spinner spinner, Object val) {
+
+        for (int i = 0; i < spinner.getAdapter().getCount(); i++) {
+
+            ViewValue item = (ViewValue) spinner.getAdapter().getItem(i);
+
+            if (item.getValue().equals(val)) {
+                return i;
+            }
+        }
+        return 0;
+    }
 }

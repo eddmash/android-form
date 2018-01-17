@@ -1,4 +1,4 @@
-package com.eddmash.form;
+package com.eddmash.form.values;
 /*
 * This file is part of the Fivmszm package.
 * 
@@ -13,12 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SpinnerValue implements SpinnerValueInterface<Map> {
+public class ViewValue implements ValueInterface<Map> {
     private Map item;
     private final String labelCol;
     private final String valueCol;
 
-    public SpinnerValue(Map item, String labelCol, String valueCol) {
+    public ViewValue(Map item, String labelCol, String valueCol) {
         this.item = item;
         this.labelCol = labelCol;
         this.valueCol = valueCol;
@@ -51,15 +51,15 @@ public class SpinnerValue implements SpinnerValueInterface<Map> {
      *
      * @return
      */
-    public static List<SpinnerValueInterface> fromCollection(List<Map> data, String colKey,
-                                                             String valueKey) {
-        List<SpinnerValueInterface> choices = new ArrayList<>();
+    public static List<ValueInterface> fromCollection(List<Map> data, String colKey,
+                                                      String valueKey) {
+        List<ValueInterface> choices = new ArrayList<>();
         Map empty = new HashMap();
         empty.put("name", "");
         empty.put("value", "");
-        choices.add(new SpinnerValue(empty, "name", "value"));
+        choices.add(new ViewValue(empty, "name", "value"));
         for (Map it : data) {
-            choices.add(new SpinnerValue(it, colKey, valueKey));
+            choices.add(new ViewValue(it, colKey, valueKey));
         }
         return choices;
     }
