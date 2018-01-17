@@ -156,7 +156,7 @@ class Guess {
         }
 
         if (field instanceof DatePickerView) {
-            provider = new DateProvider().setDateFormat(DatePickerView.DATEFORMAT).getTime();
+            provider = new DateProvider().setDateFormat(DatePickerView.DATEFORMAT);
         }
 
         if (provider == null) {

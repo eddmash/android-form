@@ -18,8 +18,10 @@ import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
 import com.eddmash.form.faker.provider.ProviderInterface;
 import com.eddmash.form.fields.CollectionField;
+import com.eddmash.form.fields.SimpleField;
 import com.eddmash.form.fields.ViewField;
 import com.eddmash.form.fields.FieldInterface;
+import com.eddmash.views.CollectionView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +35,7 @@ import java.util.Random;
 public class DummyDataPopulator implements PopulatorInterface {
     private Guess guesser;
     private Map<String, ProviderInterface> fieldPopulators;
+    private boolean populationComplete = false;
 
 
     public DummyDataPopulator() {
@@ -46,19 +49,22 @@ public class DummyDataPopulator implements PopulatorInterface {
     }
 
     public void populate(FormInterface form) throws FormException {
-        Log.e(DummyDataPopulator.class.getName(), form.getClass().getName() + " ::: Loading data " +
-                "::: " +
-                form.getFields());
+        if (!populationComplete) {
 
-        FieldInterface field;
+            Log.e(DummyDataPopulator.class.getName(), form.getClass().getName() +
+                    " ::: Loading  data ::: " + form.getFields());
 
-        for (String fieldName : form.getFields().keySet()) {
-            field = form.getField(fieldName);
-            Log.e(DummyDataPopulator.class.getSimpleName(), form.getClass().getSimpleName()
-                    + " ::: ViewField ::: " +
-                    field.getName());
+            FieldInterface field;
 
-            populate(field);
+            for (String fieldName : form.getFields().keySet()) {
+                field = form.getField(fieldName);
+                Log.e(DummyDataPopulator.class.getSimpleName(), form.getClass().getSimpleName()
+                        + " ::: ViewField ::: " +
+                        field.getName());
+
+                populate(field);
+            }
+            populationComplete = true;
         }
     }
 
@@ -70,7 +76,7 @@ public class DummyDataPopulator implements PopulatorInterface {
                         .getSimpleName()
                         + " "
                         + field.getName() + " Editable " + field.isEditable());
-        if (field.isEditable()) {
+        if (field.isEditable() && !(field instanceof SimpleField)) {
 
             if (field instanceof ViewField) {
                 val = generateData(field.getName(), (View) field.getView());
@@ -82,10 +88,8 @@ public class DummyDataPopulator implements PopulatorInterface {
                 for (FieldInterface cField : collectionFields.values()) {
                     Log.e(DummyDataPopulator.class.getSimpleName(),
                             cField.getClass().getSimpleName() + " " +
-                                    "::: cField ::: "
-                                    + cField
-                                    .getName());
-                    if (cField.isEditable()) {
+                                    "::: cField ::: " + cField.getName());
+                    if (cField.isEditable() && !(cField instanceof SimpleField)) {
                         cField.setValue(generateData(cField.getName(), (View) cField.getView()));
                     }
                 }
@@ -117,19 +121,22 @@ public class DummyDataPopulator implements PopulatorInterface {
 
         if (field instanceof Spinner) {
             int count = ((Spinner) field).getAdapter().getCount();
-            if (count == 0) {
+            if (count == 1 || count == 0) {
                 return String.valueOf(0);
             }
             Random rand = new Random();
             int value = rand.nextInt(count);
-            value = (value == 0) ? 1 : value;
-            String val = String.valueOf(value);
-            return val;
+            while (value == 0) {
+                value = rand.nextInt(count);
+                Log.e("SPINNER VAL", count + " :: " + String.valueOf(value));
+            }
+            return String.valueOf(value);
         }
 
         if (field instanceof CompoundButton) {
             return "true";
         }
+
         throw new FormException("Unable to generate dummy data form " + fieldName);
     }
 

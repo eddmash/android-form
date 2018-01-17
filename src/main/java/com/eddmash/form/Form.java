@@ -11,6 +11,8 @@ package com.eddmash.form;
 import android.util.Log;
 import android.view.View;
 
+import com.eddmash.form.fields.CollectionField;
+import com.eddmash.form.fields.CollectionFieldInterface;
 import com.eddmash.form.fields.ViewField;
 import com.eddmash.form.fields.FieldInterface;
 import com.eddmash.validation.ValidatorInterface;
@@ -88,17 +90,17 @@ public abstract class Form implements FormInterface {
     @Override
     public void setData(Map data) throws FormException {
         if (data != null && !data.isEmpty()) {
-            for (String fieldName : fields.keySet()) {
-                if (!data.containsKey(fieldName)) {
-                    continue;
+
+            for (FieldInterface field : fields.values()) {
+                if (data.containsKey(field.getName())) {
+                    field.setValue(data.get(field.getName()));
                 }
-                fields.get(fieldName).setValue(data.get(fieldName));
+
+                if (field instanceof CollectionField) {
+                    field.setValue(data);
+                }
             }
         }
-    }
-
-    private String getTag() {
-        return getClass().getName();
     }
 
     public Map<String, Object> getValues() throws FormException {
@@ -112,7 +114,7 @@ public abstract class Form implements FormInterface {
         for (String fieldName : fields.keySet()) {
             values.put(fieldName, fields.get(fieldName).getValue());
         }
-        Log.e(getTag(), " FORM  :: " + this.getTag() + " :: DATA " + values);
+        Log.e(getClass().getSimpleName(), " :: DATA " + values);
         return values;
     }
 

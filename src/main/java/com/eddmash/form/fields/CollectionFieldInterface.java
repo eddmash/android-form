@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Field that manipulates multiple views together.
  */
-interface CollectionFieldInterface extends FieldInterface {
+public interface CollectionFieldInterface extends FieldInterface {
 
     /**
      * The fields that make up the collection
