@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.eddmash.form.FormException;
+import com.eddmash.form.values.ValueInterface;
 import com.eddmash.form.values.ViewValue;
 import com.eddmash.views.CollectionView;
 
@@ -109,10 +110,17 @@ public class ViewField extends BaseField {
 
         for (int i = 0; i < spinner.getAdapter().getCount(); i++) {
 
-            ViewValue item = (ViewValue) spinner.getAdapter().getItem(i);
+            if (spinner.getAdapter().getItem(i) instanceof ValueInterface) {
+                ViewValue item = (ViewValue) spinner.getAdapter().getItem(i);
 
-            if (item.getValue().equals(val)) {
-                return i;
+                if (item.getValue().equals(val)) {
+                    return i;
+                }
+            }
+            if (spinner.getAdapter().getItem(i) instanceof String) {
+                if (spinner.getAdapter().getItem(i).equals(val)) {
+                    return i;
+                }
             }
         }
         return 0;
