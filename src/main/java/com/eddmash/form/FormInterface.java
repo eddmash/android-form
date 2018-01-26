@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.eddmash.form.fields.FieldInterface;
 import com.eddmash.validation.ValidatorInterface;
+import com.eddmash.validation.checks.CheckInterface;
 
 import java.util.Map;
 
@@ -22,6 +23,8 @@ public interface FormInterface {
     void addField(FieldInterface field);
 
     void addField(String colName, View view);
+
+    void addField(String name, View view, CheckInterface check);
 
     void removeField(String replace);
 

@@ -16,6 +16,8 @@ import com.eddmash.form.fields.CollectionFieldInterface;
 import com.eddmash.form.fields.ViewField;
 import com.eddmash.form.fields.FieldInterface;
 import com.eddmash.validation.ValidatorInterface;
+import com.eddmash.validation.checks.CheckInterface;
+import com.eddmash.validation.checks.NotEmptyCheck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +65,12 @@ public abstract class Form implements FormInterface {
     public void addField(String colName, View view) {
 
         fields.put(colName, new ViewField(colName, view).setForm(this));
+    }
+
+    @Override
+    public void addField(String name, View view, CheckInterface check) {
+        addField(name, view);
+        getValidator().addCheck(check);
     }
 
     @Override
