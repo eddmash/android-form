@@ -44,5 +44,7 @@ public interface FormInterface {
 
     boolean isValid();
 
-    boolean save();
+//    boolean save();
+
+    void save() throws FormException;
 }

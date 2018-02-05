@@ -13,6 +13,8 @@ import android.util.Log;
 import com.eddmash.form.FormException;
 import com.eddmash.validation.ValidatorInterface;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -74,33 +76,73 @@ public class FormCollection implements FormCollectionInterface {
     @Override
     public boolean save() throws FormException {
         boolean save = false;
-        Log.e(getTag(), "SAVING FORMS :: "+getSortedForms());
+        Log.e(getTag(), "SAVING FORMS :: " + getSortedForms());
         for (String name : getSortedForms()) {
             Log.e(getTag(), "SAVING " + name + " STATUS " + save);
             InnerFormInterface form = this.getForm(name);
-            save = form.save();
+            form.save();
             Log.e(getTag(), "SAVING " + name + " STATUS " + save);
-//            if (!save){
-//                return false;
-//            }
         }
         return true;
     }
 
-    private List<String> getSortedForms() {
-        List<String> sorted = new ArrayList<>();
+    private List<String> getSortedForms() throws FormException {
+
+        Map<String, List> depsGraph = new HashMap<>();
         List<String> dependencies;
         for (String name : forms.keySet()) {
             InnerFormInterface form = forms.get(name);
             dependencies = new ArrayList<>(Arrays.asList(form.requires()));
+            depsGraph.put(name, dependencies);
             for (String depends : dependencies) {
-                if (!sorted.contains(depends)) {
-                    sorted.add(depends); //todo need to serious sorting
+                if (!depsGraph.containsKey(depends)) {
+                    depsGraph.put(depends, new ArrayList());
                 }
             }
-            sorted.add(form.getIdentifier());
+
         }
 
+        return toposort(depsGraph);
+    }
+
+    private List<String> toposort(Map<String, List> depsGraph) throws FormException {
+        List<String> itemDependencies;
+        List<String> noDependencies;
+        Map<String, List> newDeps;
+        List<String> sorted = new ArrayList<>();
+        Map<String, List> data = depsGraph;
+
+        while (!data.isEmpty()) {
+            // get items without any dependencies
+            noDependencies = new ArrayList<>();
+            for (String item : data.keySet()) {
+                if (depsGraph.get(item).isEmpty()) {
+                    noDependencies.add(item);
+                }
+            }
+
+            if (noDependencies.isEmpty()) {
+                String failed = "";
+                failed = new JSONArray(noDependencies).toString();
+
+                throw new FormException(String.format(
+                        "Cyclic dependency on topological sort %s", failed));
+            }
+            sorted.addAll(noDependencies);
+
+            // create new graph , removeing those items that have already been sorted.
+            newDeps = new HashMap<>();
+            for (String item : data.keySet()) {
+                if (!sorted.contains(item)) {
+                    // remove the already sorted parent from the list of dependencies
+                    // of current item.
+                    itemDependencies = data.get(item);
+                    itemDependencies.removeAll(noDependencies);
+                    newDeps.put(item, itemDependencies);
+                }
+            }
+            data = newDeps;
+        }
         return sorted;
     }
 }
