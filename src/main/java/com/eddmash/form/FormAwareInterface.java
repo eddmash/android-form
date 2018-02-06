@@ -1,4 +1,4 @@
-package com.eddmash.validations;
+package com.eddmash.form;
 /*
 * This file is part of the mfivms_malawi_registration_and package.
 * 
@@ -10,6 +10,9 @@ package com.eddmash.validations;
 
 import com.eddmash.form.FormInterface;
 
+/**
+ * This makes the a form able to deal with a form as a whole
+ */
 public interface FormAwareInterface {
     void setForm(FormInterface form);
 }

@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 
 ext {
-    versionCode = 6
+    versionCode = 7
     bintrayRepo = 'maven'
     bintrayName = 'android-form'
 

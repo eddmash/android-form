@@ -18,12 +18,15 @@ import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
 import com.eddmash.form.faker.provider.ProviderInterface;
 import com.eddmash.form.fields.CollectionField;
+import com.eddmash.form.fields.MultiField;
+import com.eddmash.form.fields.MultiFieldInterface;
 import com.eddmash.form.fields.SimpleField;
 import com.eddmash.form.fields.ViewField;
 import com.eddmash.form.fields.FieldInterface;
 import com.eddmash.views.CollectionView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -58,10 +61,6 @@ public class DummyDataPopulator implements PopulatorInterface {
 
             for (String fieldName : form.getFields().keySet()) {
                 field = form.getField(fieldName);
-                Log.e(DummyDataPopulator.class.getSimpleName(), form.getClass().getSimpleName()
-                        + " ::: ViewField ::: " +
-                        field.getName());
-
                 populate(field);
             }
             populationComplete = true;
@@ -71,11 +70,9 @@ public class DummyDataPopulator implements PopulatorInterface {
     public void populate(FieldInterface field) throws FormException {
         String val;
         Log.e(DummyDataPopulator.class.getSimpleName(),
-                field.getForm().getClass().getSimpleName()
-                        + "::" + field.getClass()
-                        .getSimpleName()
-                        + " "
-                        + field.getName() + " Editable " + field.isEditable());
+                "POPULATING :: " + field.getForm().getClass().getSimpleName()
+                        + "::" + field.getClass().getSimpleName()
+                        + " " + field.getName() + " Editable " + field.isEditable());
         if (field.isEditable() && !(field instanceof SimpleField)) {
 
             if (field instanceof ViewField) {
@@ -93,6 +90,25 @@ public class DummyDataPopulator implements PopulatorInterface {
                         cField.setValue(generateData(cField.getName(), (View) cField.getView()));
                     }
                 }
+            } else if (field instanceof MultiFieldInterface) {
+
+                Log.e(getClass().getSimpleName(), field.getClass().getSimpleName() + " :: " +
+                        field.getName());
+                Random rand = new Random();
+                int i = 0;
+                List<View> views = ((MultiField) field).getViews();
+                int count = views.size();
+
+                Log.e(getClass().getSimpleName(),
+                        field.getClass().getSimpleName() + " found " + count);
+                View innerView;
+                while (count > 0 && i < 5) {
+                    innerView = views.get(rand.nextInt(count));
+                    ((MultiField) field).getField(innerView).
+                            setValue(generateData(field.getName(), innerView));
+                    i++;
+                }
+
             }
         }
     }

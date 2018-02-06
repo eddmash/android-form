@@ -40,7 +40,7 @@ public class FormCollection implements FormCollectionInterface {
         }
         forms.put(form.getIdentifier(), form);
         ((InnerForm) form).setParent(this);
-        validator.addValidator(form.getValidator());
+//        validator.addValidator(form.getValidator());
     }
 
     @Override
@@ -65,7 +65,21 @@ public class FormCollection implements FormCollectionInterface {
 
     @Override
     public boolean isValid() {
-        return validator.validate();
+        boolean isValid = validator.validate();
+        try {
+            for (String name : getSortedForms()) {
+                InnerFormInterface form = this.getForm(name);
+                boolean formIsValid = form.isValid();
+                if (!formIsValid) {
+                    validator.getErrors().putAll(form.getErrors());
+                }
+                isValid = (formIsValid && isValid);
+            }
+        } catch (FormException e) {
+            e.printStackTrace();
+        }
+
+        return isValid;
     }
 
     @Override

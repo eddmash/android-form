@@ -15,6 +15,10 @@ import com.eddmash.validation.ValidatorInterface;
 public abstract class InnerForm extends Form implements InnerFormInterface {
     protected FormCollectionInterface form;
 
+    public InnerForm() {
+        super();
+    }
+
     public InnerForm(ValidatorInterface validator) {
         super(validator);
     }

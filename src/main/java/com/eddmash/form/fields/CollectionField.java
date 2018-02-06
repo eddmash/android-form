@@ -18,6 +18,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Field that manipulates multiple indivual views together.
+ * <p>
+ * Its important to note that the specific fields dont loose there individuality and the values
+ * return will be values for each single view.
+ * <p>
+ * Setting will be attempted on each single view if its value is found in the map of values
+ * passed in.
+ */
 public class CollectionField extends BaseField implements CollectionFieldInterface {
     private String name;
     private Map<String, FieldInterface> fields;

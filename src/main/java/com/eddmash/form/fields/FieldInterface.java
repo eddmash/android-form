@@ -8,6 +8,8 @@ package com.eddmash.form.fields;
 * file that was distributed with this source code.
 */
 
+import android.view.View;
+
 import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
 

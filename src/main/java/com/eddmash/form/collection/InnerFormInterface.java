@@ -15,8 +15,6 @@ import com.eddmash.form.FormInterface;
  */
 public interface InnerFormInterface extends FormInterface {
 
-    String getIdentifier();
-
     String[] requires();
 
     FormCollectionInterface getParent();

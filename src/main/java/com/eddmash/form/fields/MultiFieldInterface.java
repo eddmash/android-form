@@ -8,5 +8,19 @@ package com.eddmash.form.fields;
 * file that was distributed with this source code.
 */
 
-interface MultiFieldInterface {
+import android.view.View;
+
+import com.eddmash.form.FormException;
+
+import java.util.List;
+
+public interface MultiFieldInterface {
+
+    FieldInterface getField(View view) throws FormException;
+
+    List<View> getViews();
+
+    void addView(View view);
+
+    void removeView(View view);
 }

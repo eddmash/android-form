@@ -12,15 +12,15 @@ import android.util.Log;
 import android.view.View;
 
 import com.eddmash.form.fields.CollectionField;
-import com.eddmash.form.fields.CollectionFieldInterface;
-import com.eddmash.form.fields.ViewField;
 import com.eddmash.form.fields.FieldInterface;
+import com.eddmash.form.fields.ViewField;
+import com.eddmash.validation.Validator;
 import com.eddmash.validation.ValidatorInterface;
 import com.eddmash.validation.checks.CheckInterface;
-import com.eddmash.validation.checks.NotEmptyCheck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Form implements FormInterface {
@@ -30,7 +30,15 @@ public abstract class Form implements FormInterface {
     private Map<String, ArrayList<String>> orderMap;
     private Map<String, FieldInterface> fields;
 
+    public Form() {
+        init(new Validator(getIdentifier()));
+    }
+
     public Form(ValidatorInterface validator) {
+        init(validator);
+    }
+
+    private void init(ValidatorInterface validator) {
         data = new HashMap();
         orderMap = new HashMap<>();
         fields = new HashMap<>();
@@ -44,8 +52,21 @@ public abstract class Form implements FormInterface {
     }
 
     @Override
-    public ValidatorInterface getValidator() {
-        return validator;
+    public String getIdentifier() {
+        return getClass().getName();
+    }
+
+    @Override
+    public void addCheck(CheckInterface check) {
+        if (check instanceof FormAwareInterface) {
+            ((FormAwareInterface) check).setForm(this);
+        }
+        validator.addCheck(check);
+    }
+
+    @Override
+    public void disableCheck(CheckInterface check) {
+        validator.disableCheck(check);
     }
 
     @Override
@@ -67,11 +88,6 @@ public abstract class Form implements FormInterface {
         fields.put(colName, new ViewField(colName, view).setForm(this));
     }
 
-    @Override
-    public void addField(String name, View view, CheckInterface check) {
-        addField(name, view);
-        getValidator().addCheck(check);
-    }
 
     @Override
     public void removeField(String colName) {
@@ -92,7 +108,13 @@ public abstract class Form implements FormInterface {
 
     @Override
     public boolean isValid() {
+        validate();
         return validator.validate();
+    }
+
+    @Override
+    public void validate() {
+
     }
 
     @Override
@@ -140,4 +162,9 @@ public abstract class Form implements FormInterface {
         extraFields.put(fieldName, value);
     }
 
+
+    @Override
+    public Map<String, List> getErrors() {
+        return validator.getErrors();
+    }
 }
