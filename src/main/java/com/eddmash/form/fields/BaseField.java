@@ -26,9 +26,8 @@ public abstract class BaseField<V, E> implements FieldInterface<V, E> {
     }
 
     @Override
-    public FieldInterface setForm(FormInterface form) {
+    public void setForm(FormInterface form) {
         this.form = form;
-        return this;
     }
 
     @Override

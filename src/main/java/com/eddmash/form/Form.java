@@ -84,8 +84,9 @@ public abstract class Form implements FormInterface {
 
     @Override
     public void addField(String colName, View view) {
-
-        fields.put(colName, new ViewField(colName, view).setForm(this));
+        FieldInterface field = new ViewField(colName, view);
+        field.setForm(this);
+        fields.put(colName, field);
     }
 
 
@@ -98,7 +99,8 @@ public abstract class Form implements FormInterface {
 
     @Override
     public void addField(FieldInterface field) {
-        fields.put(field.getName(), field.setForm(this));
+        field.setForm(this);
+        fields.put(field.getName(), field);
     }
 
     @Override
