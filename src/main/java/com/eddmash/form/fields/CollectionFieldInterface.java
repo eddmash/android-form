@@ -10,18 +10,21 @@ package com.eddmash.form.fields;
 
 import android.view.View;
 
+import com.eddmash.form.FormException;
+
+import java.util.List;
 import java.util.Map;
 
 /**
  * Field that manipulates multiple views together.
  * <p>
- * Its important to note that the specific fields dont loose there individuality and the values
+ * Its important to note that the specific fields don't loose there individuality and the values
  * return will be values for each single view.
  * <p>
  * Setting will be attempted on each single view if its value is found in the map of values
  * passed in.
  */
-public interface CollectionFieldInterface extends FieldInterface {
+public interface CollectionFieldInterface<T,E> extends FieldInterface<T, E> {
 
     /**
      * The fields that make up the collection
@@ -55,4 +58,12 @@ public interface CollectionFieldInterface extends FieldInterface {
      */
     void addField(FieldInterface field);
 
+    @Override
+    E getValue() throws FormException;
+
+    @Override
+    void setValue(E o) throws FormException;
+
+    @Override
+    T getView() throws FormException;
 }

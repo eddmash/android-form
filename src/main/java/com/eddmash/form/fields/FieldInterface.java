@@ -13,10 +13,12 @@ import android.view.View;
 import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
 
+import java.util.List;
+
 /**
  * This provides a consitent way of dealing with the different views provided by android.
  */
-public interface FieldInterface {
+public interface FieldInterface<T, E> {
 
     /**
      * Returns the value of the view
@@ -24,7 +26,7 @@ public interface FieldInterface {
      * @return Object
      * @throws FormException
      */
-    Object getValue() throws FormException;
+    E getValue() throws FormException;
 
     /**
      * Set view value.
@@ -32,7 +34,7 @@ public interface FieldInterface {
      * @param o
      * @throws FormException
      */
-    void setValue(Object o) throws FormException;
+    void setValue(E o) throws FormException;
 
     /**
      * A name that uniquely identify the view. this is use when you need to pull a specific field
@@ -50,7 +52,7 @@ public interface FieldInterface {
      * @return a view instance
      * @throws FormException in case it not possible to retrieve the view object
      */
-    Object getView() throws FormException;
+    T getView() throws FormException;
 
     /**
      * Is the view editable, this tells the form not to set values for the view and also tells

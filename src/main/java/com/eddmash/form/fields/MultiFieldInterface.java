@@ -16,11 +16,18 @@ import java.util.List;
 
 public interface MultiFieldInterface {
 
-    FieldInterface getField(View view) throws FormException;
+    FieldInterface getField(String id) throws FormException;
 
-    List<View> getViews();
+    void addView(String id, View view);
 
-    void addView(View view);
+    List<FieldInterface> getFields();
 
-    void removeView(View view);
+    void removeView(String id);
+
+    /**
+     * Get the number of views the multifield contains.
+     *
+     * @return
+     */
+    int getChildCount();
 }

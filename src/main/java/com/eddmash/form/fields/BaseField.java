@@ -8,9 +8,10 @@ package com.eddmash.form.fields;
 * file that was distributed with this source code.
 */
 
+import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
 
-public abstract class BaseField implements FieldInterface {
+public abstract class BaseField<V, E> implements FieldInterface<V, E> {
 
     protected FormInterface form;
     protected boolean isEditable;
@@ -34,4 +35,13 @@ public abstract class BaseField implements FieldInterface {
     public boolean isEditable() {
         return this.isEditable;
     }
+
+    @Override
+    public abstract V getView() throws FormException;
+
+    @Override
+    public abstract E getValue() throws FormException;
+
+    @Override
+    public abstract void setValue(E o) throws FormException;
 }

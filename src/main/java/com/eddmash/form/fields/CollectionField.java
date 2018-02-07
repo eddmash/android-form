@@ -19,15 +19,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Field that manipulates multiple indivual views together.
+ * Field that manipulates multiple individual views together.
  * <p>
- * Its important to note that the specific fields dont loose there individuality and the values
+ * Its important to note that the specific fields don't loose there individuality and the values
  * return will be values for each single view.
  * <p>
  * Setting will be attempted on each single view if its value is found in the map of values
  * passed in.
  */
-public class CollectionField extends BaseField implements CollectionFieldInterface {
+public class CollectionField extends BaseField<List<View>, Object>
+        implements CollectionFieldInterface<List<View>, Object> {
     private String name;
     private Map<String, FieldInterface> fields;
 
@@ -64,7 +65,7 @@ public class CollectionField extends BaseField implements CollectionFieldInterfa
     }
 
     @Override
-    public Object getValue() throws FormException {
+    public Map<String, Object> getValue() throws FormException {
         Map<String, Object> vals = new HashMap<>();
         for (String name : fields.keySet()) {
             vals.put(name, fields.get(name).getValue());
@@ -104,12 +105,11 @@ public class CollectionField extends BaseField implements CollectionFieldInterfa
     }
 
     @Override
-    public Object getView() throws FormException {
+    public List<View> getView() throws FormException {
         List<View> views = new ArrayList<>();
         for (FieldInterface field : fields.values()) {
             views.add((View) field.getView());
         }
         return views;
     }
-
 }

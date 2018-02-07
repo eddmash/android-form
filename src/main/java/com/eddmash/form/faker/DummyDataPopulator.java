@@ -94,18 +94,18 @@ public class DummyDataPopulator implements PopulatorInterface {
 
                 Log.e(getClass().getSimpleName(), field.getClass().getSimpleName() + " :: " +
                         field.getName());
-                Random rand = new Random();
                 int i = 0;
-                List<View> views = ((MultiField) field).getViews();
-                int count = views.size();
+                MultiField multiField = ((MultiField) field);
+                int count = multiField.getChildCount();
 
+                Random rand = new Random();
+                int limit = rand.nextInt(count);
                 Log.e(getClass().getSimpleName(),
-                        field.getClass().getSimpleName() + " found " + count);
-                View innerView;
-                while (count > 0 && i < 5) {
-                    innerView = views.get(rand.nextInt(count));
-                    ((MultiField) field).getField(innerView).
-                            setValue(generateData(field.getName(), innerView));
+                        field.getClass().getSimpleName() + " found " + count + " LIMIT " + limit);
+                FieldInterface innerField;
+                while (count > 0 && i < limit) {
+                    innerField = multiField.getFields().get(i);
+                    innerField.setValue(generateData(field.getName(), (View) innerField.getView()));
                     i++;
                 }
 

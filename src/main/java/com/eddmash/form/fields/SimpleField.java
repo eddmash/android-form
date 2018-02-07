@@ -10,7 +10,7 @@ package com.eddmash.form.fields;
 
 import com.eddmash.form.FormException;
 
-public class SimpleField extends BaseField {
+public class SimpleField extends BaseField<Object, Object> {
 
     private String name;
     private Object value;
@@ -42,7 +42,7 @@ public class SimpleField extends BaseField {
 
     @Override
     public Object getView() throws FormException {
+
         throw new FormException("makeView() not supported on " + this.getClass().getName());
     }
-
 }

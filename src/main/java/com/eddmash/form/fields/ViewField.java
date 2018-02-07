@@ -19,7 +19,7 @@ import com.eddmash.form.values.ValueInterface;
 import com.eddmash.form.values.ViewValue;
 import com.eddmash.views.CollectionView;
 
-public class ViewField extends BaseField {
+public class ViewField extends BaseField<View, String> {
     private String name;
     private View view;
 
@@ -37,13 +37,13 @@ public class ViewField extends BaseField {
     }
 
     @Override
-    public Object getValue() throws FormException {
+    public String getValue() throws FormException {
 
         if (view instanceof CompoundButton) {
-            return ((CompoundButton) view).isChecked();
+            return String.valueOf(((CompoundButton) view).isChecked());
         }
         if (view instanceof TextView) {
-            return ((TextView) view).getText();
+            return String.valueOf(((TextView) view).getText());
         }
         if (view instanceof Spinner) {
             Object val = ((Spinner) view).getSelectedItem();
@@ -52,18 +52,19 @@ public class ViewField extends BaseField {
             } else {
                 val = val + "";
             }
-            return val;
+            return String.valueOf(val);
         }
 
         // assumes CollectionView
         if (view instanceof CollectionView) {
-            return ((CollectionView) view).getValue();
+            return String.valueOf(((CollectionView) view).getValue());
         }
         throw new FormException("Cannot determine value for the field " + getName());
     }
 
+
     @Override
-    public void setValue(Object val) throws FormException {
+    public void setValue(String val) throws FormException {
         if (view instanceof EditText) {
             if (val == null) {
                 ((EditText) view).setText(null);
@@ -80,7 +81,7 @@ public class ViewField extends BaseField {
             if (val == null) {
                 ((CompoundButton) view).setChecked(false);
             } else {
-                ((CompoundButton) view).setChecked(Boolean.valueOf(val.toString()));
+                ((CompoundButton) view).setChecked(Boolean.valueOf(val));
             }
         } else if (view instanceof CollectionView) {
             ((CollectionView) view).setValue(val);
@@ -98,7 +99,8 @@ public class ViewField extends BaseField {
     }
 
     @Override
-    public Object getView() {
+    public View getView() {
+
         return view;
     }
 
