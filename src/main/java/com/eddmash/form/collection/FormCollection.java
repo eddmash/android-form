@@ -11,6 +11,7 @@ package com.eddmash.form.collection;
 import android.util.Log;
 
 import com.eddmash.form.FormException;
+import com.eddmash.validation.Validator;
 import com.eddmash.validation.ValidatorInterface;
 
 import org.json.JSONArray;
@@ -27,6 +28,10 @@ import java.util.Map;
 public class FormCollection implements FormCollectionInterface {
     private Map<String, InnerFormInterface> forms;
     private ValidatorInterface validator;
+
+    public FormCollection() {
+        this(new Validator("collection_validator"));
+    }
 
     public FormCollection(ValidatorInterface validator) {
         this.validator = validator;

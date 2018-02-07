@@ -13,8 +13,34 @@ import com.eddmash.form.FormInterface;
 import com.eddmash.form.faker.provider.ProviderInterface;
 import com.eddmash.form.fields.FieldInterface;
 
+/**
+ * Its responsible for populating the {@link FormInterface} or {@link FieldInterface} provided.
+ * <p>
+ * The populator uses {@link ProviderInterface providers} to populate each field presented to the
+ * populator.
+ */
 public interface PopulatorInterface {
-    void setFieldPopulator(String name, ProviderInterface provider);
+    /**
+     * Set the provider to use the populator a specific field.
+     *
+     * @param name     the name of the field that will use the provider given.
+     * @param provider the provider to use instead of the default onces.
+     */
+    void setFieldProvider(String name, ProviderInterface provider);
+
+    /**
+     * Tell the populator to start the population on the specified form.
+     *
+     * @param form
+     * @throws FormException
+     */
     void populate(FormInterface form) throws FormException;
+
+    /**
+     * Tell the populator to start the population on the specified field.
+     *
+     * @param field
+     * @throws FormException
+     */
     void populate(FieldInterface field) throws FormException;
 }

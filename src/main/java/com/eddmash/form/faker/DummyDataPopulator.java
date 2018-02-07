@@ -46,7 +46,7 @@ public class DummyDataPopulator implements PopulatorInterface {
         guesser = new Guess(this);
     }
 
-    public void setFieldPopulator(String name, ProviderInterface provider) {
+    public void setFieldProvider(String name, ProviderInterface provider) {
         provider.setPopulator(this);
         fieldPopulators.put(name, provider);
     }

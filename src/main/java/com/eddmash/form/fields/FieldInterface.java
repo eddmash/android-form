@@ -10,6 +10,7 @@ package com.eddmash.form.fields;
 
 import android.view.View;
 
+import com.eddmash.form.FormAwareInterface;
 import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
 
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * This provides a consitent way of dealing with the different views provided by android.
  */
-public interface FieldInterface<T, E> {
+public interface FieldInterface<T, E> extends FormAwareInterface {
 
     /**
      * Returns the value of the view
@@ -69,12 +70,5 @@ public interface FieldInterface<T, E> {
      */
     FormInterface getForm();
 
-    /**
-     * Set form that this form is attached to.
-     *
-     * @param form
-     * @return instance of the current field
-     */
-    FieldInterface setForm(FormInterface form);
 
 }

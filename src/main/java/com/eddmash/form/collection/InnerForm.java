@@ -12,6 +12,10 @@ import com.eddmash.form.Form;
 import com.eddmash.form.FormInterface;
 import com.eddmash.validation.ValidatorInterface;
 
+/**
+ * This is basically {@link FormInterface form }that has the capability of being used with a form
+ * collection.
+ */
 public abstract class InnerForm extends Form implements InnerFormInterface {
     protected FormCollectionInterface form;
 
@@ -22,6 +26,7 @@ public abstract class InnerForm extends Form implements InnerFormInterface {
     public InnerForm(ValidatorInterface validator) {
         super(validator);
     }
+
 
     public void setParent(FormCollectionInterface form) {
 

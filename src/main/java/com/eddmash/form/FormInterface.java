@@ -11,6 +11,7 @@ package com.eddmash.form;
 import android.view.View;
 
 import com.eddmash.form.fields.FieldInterface;
+import com.eddmash.validation.ValidatorInterface;
 import com.eddmash.validation.checks.CheckInterface;
 
 import java.util.List;
@@ -39,14 +40,46 @@ public interface FormInterface {
 
     void setData(Map data) throws FormException;
 
+    /**
+     * Return the values of each field on the form.
+     * <p>
+     * The returned values depends on the {@link FieldInterface field } some fields the values is
+     * a string whilst others its a list of string.
+     * <p>
+     * Consult the specific {@link FieldInterface field } to get the returned value.
+     *
+     * @return a map, where keys a field identifier used when adding field to form and values are
+     * the fields respective values.
+     * @throws FormException
+     */
     Map<String, Object> getValues() throws FormException;
 
+    /**
+     * Returns the value a particular field.
+     * <p>
+     * The returned values depends on the {@link FieldInterface field } some fields the values is
+     * a string whilst others its a list of string.
+     * <p>
+     * Consult the specific {@link FieldInterface field } to get the returned value.
+     *
+     * @param fieldName
+     * @return
+     * @throws FormException
+     */
     Object getValue(String fieldName) throws FormException;
 
+
+    /**
+     * Set value for a specific.
+     *
+     * @param fieldName the identifier to use to locate the field being set.
+     * @param value     the value being set, this depends on specific  {@link FieldInterface field }
+     *                  .consult specific  {@link FieldInterface field } to find expected value.
+     */
     void setValue(String fieldName, Object value);
 
     /**
-     * THis is the right place to perform form wide validations.
+     * This is the right place to perform form wide validations.
      * That is validating fields against each other, also validate against parent form fields.
      * <p>
      * At this point you have access to the getValues() of both parent form and current form
@@ -60,10 +93,13 @@ public interface FormInterface {
     void validate();
 
     /**
-     * This performs actual validations.
-     * This runs the validations on the validator then runs the validations on the validate() method.
+     * This is the entry point for form validations.
+     * <p>
+     * It firsts invokes the {@link #validate() } to get the form wide validation .
+     * <p>
+     * It the tells the validator to run the validation check.
      *
-     * @return
+     * @return true only if the validation checks passed.
      */
     boolean isValid();
 
@@ -99,4 +135,12 @@ public interface FormInterface {
      * related with the form.
      */
     Map<String, List> getErrors();
+
+
+    /**
+     * The validator this form will be using to validate the inner forms.
+     *
+     * @return
+     */
+    ValidatorInterface getValidator();
 }

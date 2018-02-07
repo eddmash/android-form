@@ -167,4 +167,9 @@ public abstract class Form implements FormInterface {
     public Map<String, List> getErrors() {
         return validator.getErrors();
     }
+
+    @Override
+    public ValidatorInterface getValidator() {
+        return validator;
+    }
 }
