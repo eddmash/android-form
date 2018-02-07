@@ -24,6 +24,26 @@ in handy when you want to prepopulate you form with sample data.
 
 For validation the `Validation <http://android-validation-library.readthedocs.io>`_ is used.
 
+install
+*******
+
+using Maven.
+
+::
+
+    <dependency>
+      <groupId>com.eddmash</groupId>
+      <artifactId>android-form</artifactId>
+      <version>1.0.7</version>
+      <type>pom</type>
+    </dependency>
+
+Using gradle
+
+::
+
+    compile 'com.eddmash:android-form:1.0.7'
+
 Usage
 *****
 
