@@ -1,20 +1,33 @@
 package com.eddmash.form.faker.provider;
 
-import com.eddmash.form.faker.Callback;
 import com.eddmash.form.faker.FakerException;
+import com.eddmash.form.faker.PopulatorInterface;
 
 /**
- * Created by eddmash on 12/20/17.
+ * Generate data that relates to companies.
  */
-
 public class Company extends Provider {
-    String NAME = "name";
-    String SUFFIX = "suffix";
+    private String JOBTITLES = "jobtitles";
+    private String NAME = "name";
+    private String SUFFIX = "suffix";
 
-    String type = NAME;
+    private String type = NAME;
+
+    public Company(PopulatorInterface populator) {
+        super(populator);
+    }
+
+    public Company(PopulatorInterface populator, String format) {
+        super(populator, format);
+    }
 
     public Company getCompany() {
         type = NAME;
+        return this;
+    }
+
+    public Company getJobTitles() {
+        type = JOBTITLES;
         return this;
     }
 
@@ -28,12 +41,18 @@ public class Company extends Provider {
         if (type.equals(SUFFIX)) {
             return getSuffix();
         }
-        return parseFormat(format, new Callback() {
-            @Override
-            public String invoke() {
-                return getPersonName(Person.LASTNAME) + " " + getSuffix();
+
+        if (type.equals(JOBTITLES)) {
+            try {
+                return randomElement(jobTitlesList());
+            } catch (FakerException e) {
+                e.printStackTrace();
             }
-        });
+            return jobTitlesList()[0];
+        }
+
+        return getPersonName()+ " " + getSuffix();
+
     }
 
     private String getSuffix() {
@@ -366,7 +385,7 @@ public class Company extends Provider {
                 "Rock Splitter", "Rolling Machine Setter", "Roof Bolters Mining", "Roofer",
                 "Rotary Drill Operator", "Rough Carpenter", "Roustabouts",
                 "Safety Engineer", "Sailor", "Sales and Related Workers", "Sales Engineer",
-                "Sales Manager", "Sales Person", "Sales Representative", "Sawing Machine " +
+                "Sales Manager", "Sales PersonProvider", "Sales Representative", "Sawing Machine " +
                 "Operator", "Sawing Machine Setter", "Sawing Machine Tool Setter", "Scanner " +
                 "Operator", "School Bus Driver", "School Social Worker", "Scientific " +
                 "Photographer", "Screen Printing Machine Operator", "Sculptor", "Secondary School" +
@@ -380,8 +399,10 @@ public class Company extends Provider {
                 "Shipping and Receiving Clerk", "Shoe and Leather Repairer", "Shoe Machine " +
                 "Operators", "Short Order Cook", "Shuttle Car Operator", "Signal Repairer OR " +
                 "Track Switch Repairer", "Silversmith", "Singer", "Sketch Artist", "Skin Care " +
-                "Specialist", "Slot Key Person", "Social and Human Service Assistant", "Social " +
-                "Media Marketing Manager", "Social Science Research Assistant", "Social Sciences " +
+                "Specialist", "Slot Key PersonProvider", "Social and Human Service Assistant",
+                "Social " +
+                        "Media Marketing Manager", "Social Science Research Assistant", "Social " +
+                "Sciences " +
                 "Teacher", "Social Scientists", "Social Service Specialists", "Social Work " +
                 "Teacher", "Social Worker", "Sociologist", "Sociology Teacher", "Software " +
                 "Engineer", "Soil Conservationist", "Soil Scientist", "Soil Scientist OR Plant " +
@@ -405,8 +426,9 @@ public class Company extends Provider {
                 " Assistant", "Team Assembler", "Technical Director", "Technical Program " +
                 "Manager", "Technical Specialist", "Technical Writer", "Telecommunications " +
                 "Equipment Installer", "Telecommunications Facility Examiner",
-                "Telecommunications Line Installer", "Telemarketer", "Telephone Operator",
-                "Telephone Station Installer and Repairer", "Teller", "Terrazzo Workes and " +
+                "Telecommunications Line Installer", "Telemarketer", "TelephoneProvider Operator",
+                "TelephoneProvider Station Installer and Repairer", "Teller", "Terrazzo Workes " +
+                "and " +
                 "Finisher", "Textile Cutting Machine Operator", "Textile Dyeing Machine " +
                 "Operator", "Textile Knitting Machine Operator", "Textile Machine Operator",
                 "Textile Worker", "Therapist", "Ticket Agent", "Tile Setter OR Marble Setter",
