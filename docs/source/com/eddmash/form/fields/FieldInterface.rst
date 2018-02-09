@@ -1,4 +1,4 @@
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: com.eddmash.form FormAwareInterface
 
@@ -36,7 +36,7 @@ getName
 .. java:method::  String getName()
    :outertype: FieldInterface
 
-   A name that uniquely identify the view. this is use when you need to pull a specific field from the form instance.
+   A name that uniquely identify the editText. this is use when you need to pull a specific field from the form instance.
 
    :return: name
 
@@ -46,7 +46,7 @@ getValue
 .. java:method::  E getValue() throws FormException
    :outertype: FieldInterface
 
-   Returns the value of the view
+   Returns the value of the editText
 
    :throws FormException:
    :return: Object
@@ -57,12 +57,12 @@ getView
 .. java:method::  T getView() throws FormException
    :outertype: FieldInterface
 
-   The actual view object(s) we are operating on.
+   The actual editText object(s) we are operating on.
 
-   Note this may return a list of view objects in case of CollectionField
+   Note this may return a list of editText objects in case of CollectionField
 
-   :throws FormException: in case it not possible to retrieve the view object
-   :return: a view instance
+   :throws FormException: in case it not possible to retrieve the editText object
+   :return: a editText instance
 
 isEditable
 ^^^^^^^^^^
@@ -70,7 +70,7 @@ isEditable
 .. java:method::  boolean isEditable()
    :outertype: FieldInterface
 
-   Is the view editable, this tells the form not to set values for the view and also tells the populator not to populate it.
+   Is the editText editable, this tells the form not to set values for the editText and also tells the populator not to populate it.
 
    :return: true if editable, false otherwise
 
@@ -80,7 +80,7 @@ setValue
 .. java:method::  void setValue(E o) throws FormException
    :outertype: FieldInterface
 
-   Set view value.
+   Set editText value.
 
    :param o:
    :throws FormException:

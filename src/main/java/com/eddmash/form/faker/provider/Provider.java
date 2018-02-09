@@ -18,12 +18,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * An implimentation of {@link ProviderInterface }.
+ * <p>
+ * Go to {@link ProviderInterface } to learn more.
+ */
 public abstract class Provider implements ProviderInterface {
     public static final String SEPARATOR = "\\.";
     public static final String PATTERN = "^([a-z]+)\\.([a-z]+)$";
     protected PopulatorInterface populator;
     public static final String RANDOM_INT = "provider.randomInt";
-    protected String format = "#";
+    protected String format;
+
+    public Provider(PopulatorInterface populator) {
+        this(populator, "#");
+    }
+
+    public Provider(PopulatorInterface populator, String format) {
+
+        this.populator = populator;
+        this.format = format;
+    }
 
     public PopulatorInterface getPopulator() {
         return populator;
@@ -81,32 +96,21 @@ public abstract class Provider implements ProviderInterface {
         return new RandomDataGenerator().nextUniform(minNumber, maxNumber);
     }
 
-    protected String getPersonName(String type) {
-        return new Person().setType(type).setPopulator(getPopulator()).generate();
-    }
 
-    @Override
-    public ProviderInterface setPopulator(PopulatorInterface populator) {
-        this.populator = populator;
-        return this;
+    public String getPersonName() {
+        String gender = "female";
+        try {
+            gender = randomElement(new String[]{PersonProvider.FEMALE, PersonProvider.MALE});
+        } catch (FakerException e) {
+            e.printStackTrace();
+        }
+        return new PersonProvider(populator).getFirstName(gender).getData();
     }
 
     @Override
     public String toString() {
-        return generate();
+        return getData();
     }
-
-    @Override
-    public String getIdentifier() {
-        return getClass().getName();
-    }
-
-
-    public Provider setFormat(String format) {
-        this.format = format;
-        return this;
-    }
-
 
     protected String parseFormat(String format, Callback callback) {
         int repeat = format.split("#", -1).length;
@@ -119,4 +123,13 @@ public abstract class Provider implements ProviderInterface {
         return String.format(format.replace("#", "%s"), args.toArray());
     }
 
+    @Override
+    public String getData() {
+        return parseFormat(format, new Callback() {
+            @Override
+            public String invoke() {
+                return generate();
+            }
+        });
+    }
 }

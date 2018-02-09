@@ -1,4 +1,4 @@
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: com.eddmash.form FormException
 
@@ -16,34 +16,34 @@ CollectionFieldInterface
 
    Field that manipulates multiple views together.
 
-   Its important to note that the specific fields don't loose there individuality and the values return will be values for each single view.
+   Its important to note that the specific fields don't loose there individuality and the values return will be values for each single editText.
 
-   Setting will be attempted on each single view if its value is found in the map of values passed in.
+   Setting will be attempted on each single editText if its value is found in the map of values passed in.
 
 Methods
 -------
 addField
 ^^^^^^^^
 
-.. java:method::  void addField(String name, View view)
+.. java:method::  void addField(String name, View editText)
    :outertype: CollectionFieldInterface
 
-   Add view to the collection.
+   Add editText to the collection.
 
-   :param name: identify the view uniquely
-   :param view: the view instance
+   :param name: identify the editText uniquely
+   :param editText: the editText instance
 
 addField
 ^^^^^^^^
 
-.. java:method::  void addField(String name, View view, boolean editable)
+.. java:method::  void addField(String name, View editText, boolean editable)
    :outertype: CollectionFieldInterface
 
-   Add view to the collection.
+   Add editText to the collection.
 
-   :param name: identify the view uniquely
-   :param view: the view instance
-   :param editable: indicate if view allows having its values being set, true if view is editable, else false.
+   :param name: identify the editText uniquely
+   :param editText: the editText instance
+   :param editable: indicate if editText allows having its values being set, true if editText is editable, else false.
 
 addField
 ^^^^^^^^

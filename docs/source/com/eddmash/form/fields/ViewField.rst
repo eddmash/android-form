@@ -1,4 +1,4 @@
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: android.widget CompoundButton
 
@@ -29,13 +29,13 @@ Constructors
 ViewField
 ^^^^^^^^^
 
-.. java:constructor:: public ViewField(String name, View view)
+.. java:constructor:: public ViewField(String name, View editText)
    :outertype: ViewField
 
 ViewField
 ^^^^^^^^^
 
-.. java:constructor:: public ViewField(String name, View view, boolean isEditable)
+.. java:constructor:: public ViewField(String name, View editText, boolean isEditable)
    :outertype: ViewField
 
 Methods

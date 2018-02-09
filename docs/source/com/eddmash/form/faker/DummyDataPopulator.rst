@@ -1,6 +1,6 @@
 .. java:import:: android.util Log
 
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: android.widget CompoundButton
 

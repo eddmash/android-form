@@ -1,4 +1,4 @@
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: com.eddmash.form FormException
 
@@ -41,7 +41,7 @@ Methods
 addView
 ^^^^^^^
 
-.. java:method:: @Override public void addView(String id, View view)
+.. java:method:: @Override public void addView(String id, View editText)
    :outertype: MultiField
 
 getChildCount

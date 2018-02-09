@@ -9,13 +9,20 @@ package com.eddmash.form.faker.provider;
 */
 
 import com.eddmash.form.faker.Callback;
+import com.eddmash.form.faker.PopulatorInterface;
 
-public class Coordinates extends Provider {
+public class CoordinatesProvider extends Provider {
     String LONGITUDE = "longitude";
     String LATITUDE = "latitude";
     private String type;
 
-    public Coordinates() {
+    public CoordinatesProvider(PopulatorInterface populator) {
+        super(populator);
+        type = LATITUDE;
+    }
+
+    public CoordinatesProvider(PopulatorInterface populator, String format) {
+        super(populator, format);
         type = LATITUDE;
     }
 
@@ -32,19 +39,10 @@ public class Coordinates extends Provider {
     @Override
     public String generate() {
         if (type.equals(LONGITUDE)) {
-            return parseFormat(format, new Callback() {
-                @Override
-                public String invoke() {
-                    return String.valueOf(randomDouble(-180, 180));
-                }
-            });
+            return String.valueOf(randomDouble(-180, 180));
+
         }
-        return parseFormat(format, new Callback() {
-            @Override
-            public String invoke() {
-                return String.valueOf(randomDouble(-90, 90));
-            }
-        });
+        return String.valueOf(randomDouble(-90, 90));
     }
 
 }

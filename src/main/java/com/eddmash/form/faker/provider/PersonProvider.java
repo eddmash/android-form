@@ -8,28 +8,40 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
-public class Person extends Provider {
+import com.eddmash.form.faker.PopulatorInterface;
+
+public class PersonProvider extends Provider {
     public static final String PROVIDER_NAME = "person";
     public static final String FIRSTNAME = "firstname";
     public static final String LASTNAME = "lastname";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
-    private static final String MALE = "male";
-    private static final String FEMALE = "male";
+    public static final String MALE = "male";
+    public static final String FEMALE = "female";
     private String gender;
     private String type;
 
-    public Person() {
+    public PersonProvider(PopulatorInterface populator) {
+        super(populator);
+        init();
+    }
+
+    public PersonProvider(PopulatorInterface populator, String format) {
+        super(populator, format);
+        init();
+    }
+
+    private void init() {
         gender = MALE;
         type = NAME;
     }
 
-    public Person setType(String type) {
+    public PersonProvider setType(String type) {
         this.type = type;
         return this;
     }
 
-    public Person setGender(String gender) {
+    public PersonProvider setGender(String gender) {
         this.gender = gender;
         return this;
     }

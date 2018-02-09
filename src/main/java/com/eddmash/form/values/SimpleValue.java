@@ -8,11 +8,16 @@ package com.eddmash.form.values;
 * file that was distributed with this source code.
 */
 
-public class Value implements ValueInterface<String> {
+/**
+ * {@link ValueInterface }
+ * <p>
+ * This basically deals with simples string values.
+ */
+public class SimpleValue implements ValueInterface<String> {
     private final String value;
     private final String label;
 
-    public Value(String value, String label) {
+    public SimpleValue(String value, String label) {
 
         this.value = value;
         this.label = label;

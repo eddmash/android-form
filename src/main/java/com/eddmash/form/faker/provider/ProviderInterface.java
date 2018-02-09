@@ -8,15 +8,28 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
-import com.eddmash.form.faker.PopulatorInterface;
-
 /**
  * This class is responsible for generating data.
+ * <p>
+ * The default implementation {@link Provider} uses the {@link ProviderInterface#generate()} to
+ * generate the actual data and then use {@link ProviderInterface#getData()} to format the data.
+ * <p>
+ * That is each method on the default providers is used a setter of the type of data to generate.
  */
 public interface ProviderInterface {
-    ProviderInterface setPopulator(PopulatorInterface populator);
 
-    String getIdentifier();
-
+    /**
+     * This should return the default values the populator will use.
+     *
+     * @return
+     */
     String generate();
+
+
+    /**
+     * Returns the generated value by the provider.
+     *
+     * @return
+     */
+    String getData();
 }

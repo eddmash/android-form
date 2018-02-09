@@ -9,48 +9,52 @@ package com.eddmash.form.faker.provider;
 */
 
 import com.eddmash.form.faker.FakerException;
+import com.eddmash.form.faker.PopulatorInterface;
 
 public class InternetProvider extends Provider {
-    public static final String EMAIL = "email";
-    public static final String DOMAIN = "domain";
-    public static final String TLD = "tld";
+    private static final String EMAIL = "email";
+    private static final String DOMAIN = "domain";
+    private static final String TLD = "tld";
     private String type;
 
-    public InternetProvider() {
+    public InternetProvider(PopulatorInterface populator) {
+        super(populator);
+    }
+
+    public InternetProvider(PopulatorInterface populator, String format) {
+        super(populator, format);
+    }
+
+
+    public InternetProvider getEmail() {
         type = EMAIL;
+        return this;
     }
 
-    private String getEmail() {
-        return this.getPersonName(Person.FIRSTNAME) + "@" + this.getDomain();
+    public InternetProvider getDomain() {
+        type = DOMAIN;
+        return this;
     }
 
-    private String getDomain() {
-        return getPersonName(Person.LASTNAME) + "." + this.getTld();
-    }
-
-    private String getTld() {
-        try {
-            return randomElement(this.tlds());
-        } catch (FakerException e) {
-            e.printStackTrace();
-        }
-        return "com";
+    public InternetProvider getTld() {
+        type = TLD;
+        return this;
     }
 
 
     public String generate() {
-        if (type.equals(DOMAIN)){
-            return this.getDomain();
+        if (type.equals(DOMAIN)) {
+            return getPersonName() + "." + this.getTld();
         }
-        if (type.equals(TLD)){
-            return this.getTld();
+        if (type.equals(TLD)) {
+            try {
+                return randomElement(this.tlds());
+            } catch (FakerException e) {
+                e.printStackTrace();
+            }
+            return "com";
         }
-        return this.getEmail();
-    }
-
-    public InternetProvider setType(String type) {
-        this.type = type;
-        return this;
+        return this.getPersonName() + "@" + this.getDomain();
     }
 
     private String[] tlds() {

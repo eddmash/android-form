@@ -1,6 +1,6 @@
 .. java:import:: android.util Log
 
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: com.eddmash.form.fields CollectionField
 
@@ -55,7 +55,7 @@ addCheck
 addField
 ^^^^^^^^
 
-.. java:method:: @Override public void addField(String colName, View view)
+.. java:method:: @Override public void addField(String colName, View editText)
    :outertype: Form
 
 addField

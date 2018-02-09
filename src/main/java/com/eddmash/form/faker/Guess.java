@@ -11,16 +11,16 @@ package com.eddmash.form.faker;
 import android.view.View;
 import android.widget.EditText;
 
+import com.eddmash.form.faker.provider.CoordinatesProvider;
 import com.eddmash.form.faker.provider.DateProvider;
 import com.eddmash.form.faker.provider.InternetProvider;
 import com.eddmash.form.faker.provider.LoremProvider;
+import com.eddmash.form.faker.provider.PersonProvider;
 import com.eddmash.form.faker.provider.ProviderInterface;
 import com.eddmash.views.DatePickerView;
-import com.eddmash.form.faker.provider.Coordinates;
 import com.eddmash.form.faker.provider.LocationsProvider;
-import com.eddmash.form.faker.provider.Person;
 import com.eddmash.form.faker.provider.RandomNumberProvider;
-import com.eddmash.form.faker.provider.Telephone;
+import com.eddmash.form.faker.provider.TelephoneProvider;
 
 import static android.text.InputType.TYPE_CLASS_DATETIME;
 import static android.text.InputType.TYPE_CLASS_NUMBER;
@@ -43,12 +43,11 @@ class Guess {
     }
 
     public String guess(String name, View view) throws FakerException {
-        ProviderInterface val = guessByName(name);
-        if (val == null) {
-            val = guessByType(name, view);
+        ProviderInterface provider = guessByName(name);
+        if (provider == null) {
+            provider = guessByType(name, view);
         }
-        val.setPopulator(populator);
-        return val.generate();
+        return provider.getData();
     }
 
     /**
@@ -71,23 +70,23 @@ class Guess {
             case "telnumber":
             case "mobile":
             case "mobilenumber":
-                provider = new Telephone();
+                provider = new TelephoneProvider(populator);
                 break;
             case "email":
             case "emailaddress":
-                provider = new InternetProvider();
+                provider = new InternetProvider(populator);
                 break;
             case "firstname":
             case "middlename":
-                provider = new Person().getFirstName();
+                provider = new PersonProvider(populator).getFirstName();
                 break;
             case "surname":
             case "lastname":
-                provider = new Person().getLastName();
+                provider = new PersonProvider(populator).getLastName();
                 break;
             case "fullname":
             case "name":
-                provider = new Person().getFullName();
+                provider = new PersonProvider(populator).getFullName();
                 break;
             case "country":
             case "city":
@@ -96,15 +95,15 @@ class Guess {
             case "villagename":
             case "town":
             case "townname":
-                provider = new LocationsProvider().getCity();
+                provider = new LocationsProvider(populator).getCity();
                 break;
             case "x":
             case "latitude":
-                provider = new Coordinates().getLatitude();
+                provider = new CoordinatesProvider(populator).getLatitude();
                 break;
             case "y":
             case "longitude":
-                provider = new Coordinates().getLongitude();
+                provider = new CoordinatesProvider(populator).getLongitude();
                 break;
         }
 
@@ -126,41 +125,41 @@ class Guess {
             int type = ((EditText) field).getInputType();
 
             if (type == (TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_POSTAL_ADDRESS)) {
-                provider = new LocationsProvider().getCity();
+                provider = new LocationsProvider(populator).getCity();
 
             }
             if (type == (TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PERSON_NAME)) {
-                provider = new LocationsProvider().getCity();
+                provider = new LocationsProvider(populator).getCity();
             }
             if (type == (TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_EMAIL_ADDRESS)) {
-                provider = new InternetProvider();
+                provider = new InternetProvider(populator);
             }
             if (type == (TYPE_CLASS_NUMBER | TYPE_NUMBER_FLAG_DECIMAL)) {
-                provider = new RandomNumberProvider().getDecimal();
+                provider = new RandomNumberProvider(populator).getDecimal();
             }
             if (type == (TYPE_CLASS_NUMBER | TYPE_NUMBER_FLAG_SIGNED) ||
                     type == TYPE_CLASS_NUMBER) {
-                provider = new RandomNumberProvider();
+                provider = new RandomNumberProvider(populator);
             }
 
             if (type == (TYPE_CLASS_DATETIME | TYPE_DATETIME_VARIATION_DATE)) {
-                provider = new DateProvider();
+                provider = new DateProvider(populator);
             }
 
             if (type == (TYPE_CLASS_DATETIME | TYPE_DATETIME_VARIATION_TIME)) {
-                provider = new DateProvider().getTime();
+                provider = new DateProvider(populator).getTime();
             }
             if (type == (TYPE_CLASS_DATETIME | TYPE_DATETIME_VARIATION_NORMAL)) {
-                provider = new DateProvider();
+                provider = new DateProvider(populator);
             }
         }
 
         if (field instanceof DatePickerView) {
-            provider = new DateProvider().setDateFormat(DatePickerView.DATEFORMAT);
+            provider = new DateProvider(populator).getDate(DatePickerView.DATEFORMAT);
         }
 
         if (provider == null) {
-            provider = new LoremProvider().getWord();
+            provider = new LoremProvider(populator).getWord();
         }
         return provider;
     }

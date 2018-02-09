@@ -8,6 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
+import com.eddmash.form.faker.PopulatorInterface;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -19,31 +21,37 @@ public class DateProvider extends Provider {
     public static final String TIME_NOW = "timeNow";
     private String type;
 
-    public DateProvider() {
+    public DateProvider(PopulatorInterface populator) {
+        super(populator);
+    }
+
+    public DateProvider(PopulatorInterface populator, String format) {
+        super(populator, format);
+    }
+
+    public DateProvider getDate() {
+        return getDate(timeFormat);
+    }
+
+    public DateProvider getDate(String timeFormat) {
         type = TODAY;
-    }
-
-    public DateProvider setDateFormat(String dateFormat) {
-        this.dateFormat = dateFormat;
-        return this;
-    }
-
-    public DateProvider setTimeFormat(String timeFormat) {
         this.timeFormat = timeFormat;
         return this;
     }
 
 
-    public String today() {
-        return getDate(dateFormat);
+    public DateProvider getTime() {
+        return getTime(timeFormat);
     }
 
-    public String timeNow() {
-        return getDate(timeFormat);
+    public DateProvider getTime(String timeFormat) {
+        type = TIME_NOW;
+        this.timeFormat = timeFormat;
+        return this;
     }
 
 
-    public String getDate(String format) {
+    private String makeDate(String format) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
         return sdf.format(calendar.getTime());
@@ -52,13 +60,9 @@ public class DateProvider extends Provider {
     @Override
     public String generate() {
         if (type.equals(TIME_NOW)) {
-            return timeNow();
+            return makeDate(timeFormat);
         }
-        return today();
+        return makeDate(dateFormat);
     }
 
-    public ProviderInterface getTime() {
-        type = TIME_NOW;
-        return this;
-    }
 }

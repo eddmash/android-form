@@ -9,6 +9,7 @@ package com.eddmash.form.faker.provider;
 */
 
 import com.eddmash.form.faker.FakerException;
+import com.eddmash.form.faker.PopulatorInterface;
 
 public class LocationsProvider extends Provider {
     public static final String CITY = "city";
@@ -16,8 +17,19 @@ public class LocationsProvider extends Provider {
     public static final String ADDRESS = "address";
     private String type;
 
-    public LocationsProvider() {
+    public LocationsProvider(PopulatorInterface populator) {
+        super(populator);
+    }
+
+    public LocationsProvider(PopulatorInterface populator, String format) {
+        super(populator, format);
+    }
+
+    private LocationsProvider getAddress() {
+        format = "# # #";
         type = ADDRESS;
+
+        return this;
     }
 
     public LocationsProvider getCity() {
@@ -106,25 +118,22 @@ public class LocationsProvider extends Provider {
     @Override
     public String generate() {
         if (type.equals(CITY)) {
-            return generateCity();
+            try {
+                return getPersonName() + " " + randomElement(citySuffix());
+            } catch (FakerException e) {
+                e.printStackTrace();
+            }
+            return "";
         }
         if (type.equals(ADDRESS)) {
-            return generateAddress();
+            return new RandomNumberProvider(populator, "####").getData();
         }
-        return null;
-    }
-
-    private String generateAddress() {
-        String building = new RandomNumberProvider().setFormat("####").generate();
-        return String.format("%s %s %s", building);
-    }
-
-    private String generateCity() {
         try {
-            return getPersonName(Person.LASTNAME)+" "+randomElement(citySuffix());
+            return randomElement(countries());
         } catch (FakerException e) {
             e.printStackTrace();
         }
-        return "";
+        return countries()[0];
     }
+
 }

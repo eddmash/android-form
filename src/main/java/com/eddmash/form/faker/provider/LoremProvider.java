@@ -8,28 +8,32 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
-import com.eddmash.form.faker.Callback;
 import com.eddmash.form.faker.FakerException;
+import com.eddmash.form.faker.PopulatorInterface;
 
 import org.apache.commons.lang3.StringUtils;
 
 public class LoremProvider extends Provider {
     private int noOfWords = 1;
 
+    public LoremProvider(PopulatorInterface populator) {
+        super(populator);
+    }
+
+    public LoremProvider(PopulatorInterface populator, String format) {
+        super(populator, format);
+    }
+
     @Override
     public String generate() {
 
-        return parseFormat(format, new Callback() {
-            @Override
-            public String invoke() {
-                try {
-                    return StringUtils.join(randomElements(getWordList(), noOfWords), " ");
-                } catch (FakerException e) {
-                    e.printStackTrace();
-                }
-                return getWordList()[1];
-            }
-        });
+        try {
+            return StringUtils.join(randomElements(getWordList(), noOfWords), " ");
+        } catch (FakerException e) {
+            e.printStackTrace();
+        }
+        return getWordList()[1];
+
     }
 
     private String[] getWordList() {
@@ -78,11 +82,11 @@ public class LoremProvider extends Provider {
         return this;
     }
 
-    public ProviderInterface getWords() {
+    public LoremProvider getWords() {
         return getWords(6);
     }
 
-    public ProviderInterface getWords(int noOfWords) {
+    public LoremProvider getWords(int noOfWords) {
         this.noOfWords = noOfWords;
         return this;
     }

@@ -13,12 +13,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ViewValue implements ValueInterface<Map> {
+/**
+ * {@link ValueInterface}
+ * <p>
+ * Use this if you need to be able to access the map that the value and label where pulled from
+ * latter.
+ */
+public class MapValue implements ValueInterface<Map> {
     private Map item;
     private final String labelCol;
     private final String valueCol;
 
-    public ViewValue(Map item, String labelCol, String valueCol) {
+    public MapValue(Map item, String labelCol, String valueCol) {
         this.item = item;
         this.labelCol = labelCol;
         this.valueCol = valueCol;
@@ -48,7 +54,6 @@ public class ViewValue implements ValueInterface<Map> {
      * Take list of maps and prepares them for use as values on a spinner.
      *
      * @param data
-     *
      * @return
      */
     public static List<ValueInterface> fromCollection(List<Map> data, String colKey,
@@ -57,9 +62,9 @@ public class ViewValue implements ValueInterface<Map> {
         Map empty = new HashMap();
         empty.put("name", "");
         empty.put("value", "");
-        choices.add(new ViewValue(empty, "name", "value"));
+        choices.add(new MapValue(empty, "name", "value"));
         for (Map it : data) {
-            choices.add(new ViewValue(it, colKey, valueKey));
+            choices.add(new MapValue(it, colKey, valueKey));
         }
         return choices;
     }

@@ -83,9 +83,9 @@ To use this library is very easy
 .. code-block:: java
 
     // get the views from the layout
-    Spinner genderSpinner = (Spinner) view.findViewById(R.id.gender);
-    EditText fName = (EditText) view.findViewById(R.id.firstname);
-    EditText phone_number = (EditText) view.findViewById(R.id.phone_number);
+    Spinner genderSpinner = (Spinner) editText.findViewById(R.id.gender);
+    EditText fName = (EditText) editText.findViewById(R.id.firstname);
+    EditText phone_number = (EditText) editText.findViewById(R.id.phone_number);
 
     // add views to the form
     form.addField("gender", genderSpinner);

@@ -9,6 +9,7 @@ package com.eddmash.form.faker.provider;
 */
 
 import com.eddmash.form.faker.Callback;
+import com.eddmash.form.faker.PopulatorInterface;
 
 public class RandomNumberProvider extends Provider {
 
@@ -18,9 +19,14 @@ public class RandomNumberProvider extends Provider {
     private int max = 10;
     private String type;
 
-    public RandomNumberProvider() {
-        type = INTEGER;
+    public RandomNumberProvider(PopulatorInterface populator) {
+        super(populator);
     }
+
+    public RandomNumberProvider(PopulatorInterface populator, String format) {
+        super(populator, format);
+    }
+
 
     public RandomNumberProvider setMax(int min) {
         this.min = min;
@@ -36,19 +42,11 @@ public class RandomNumberProvider extends Provider {
     @Override
     public String generate() {
         if (type.equals(DECIMAL)) {
-            return parseFormat(format, new Callback() {
-                @Override
-                public String invoke() {
-                    return String.valueOf(randomDouble(min, max));
-                }
-            });
+            return String.valueOf(randomDouble(min, max));
+
         }
-        return parseFormat(format, new Callback() {
-            @Override
-            public String invoke() {
-                return String.valueOf(randomInt(min, max));
-            }
-        });
+        return String.valueOf(randomInt(min, max));
+
     }
 
     public ProviderInterface getDecimal() {

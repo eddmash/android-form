@@ -1,4 +1,4 @@
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: com.eddmash.form.fields FieldInterface
 
@@ -39,7 +39,7 @@ addField
 addField
 ^^^^^^^^
 
-.. java:method::  void addField(String colName, View view)
+.. java:method::  void addField(String colName, View editText)
    :outertype: FormInterface
 
 disableCheck

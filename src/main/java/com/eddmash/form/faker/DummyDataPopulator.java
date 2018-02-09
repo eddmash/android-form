@@ -47,7 +47,6 @@ public class DummyDataPopulator implements PopulatorInterface {
     }
 
     public void setFieldProvider(String name, ProviderInterface provider) {
-        provider.setPopulator(this);
         fieldPopulators.put(name, provider);
     }
 
@@ -118,7 +117,7 @@ public class DummyDataPopulator implements PopulatorInterface {
 
         if (fieldPopulators.containsKey(fieldName)) {
             try {
-                return String.valueOf(fieldPopulators.get(fieldName));
+                return String.valueOf(fieldPopulators.get(fieldName).getData());
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(getClass().getName(), e.getMessage() + " :: Falling back to guessing");

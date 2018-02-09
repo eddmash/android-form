@@ -1,4 +1,4 @@
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: com.eddmash.form FormException
 
@@ -22,9 +22,9 @@ CollectionField
 
    Field that manipulates multiple individual views together.
 
-   Its important to note that the specific fields don't loose there individuality and the values return will be values for each single view.
+   Its important to note that the specific fields don't loose there individuality and the values return will be values for each single editText.
 
-   Setting will be attempted on each single view if its value is found in the map of values passed in.
+   Setting will be attempted on each single editText if its value is found in the map of values passed in.
 
 Constructors
 ------------
@@ -45,7 +45,7 @@ Methods
 addField
 ^^^^^^^^
 
-.. java:method:: @Override public void addField(String name, View view)
+.. java:method:: @Override public void addField(String name, View editText)
    :outertype: CollectionField
 
 addField
@@ -57,7 +57,7 @@ addField
 addField
 ^^^^^^^^
 
-.. java:method:: @Override public void addField(String name, View view, boolean editable)
+.. java:method:: @Override public void addField(String name, View editText, boolean editable)
    :outertype: CollectionField
 
 getFields

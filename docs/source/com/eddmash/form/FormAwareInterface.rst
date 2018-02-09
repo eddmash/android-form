@@ -48,12 +48,12 @@ FormAwareInterface
    .. parsed-literal::
 
       class PasswordCheck extends CheckSingle implements FormAwareInterface {
-           private final EditText view;
+           private final EditText editText;
            private final String errorMsg;
            private FormInterface form;
 
-           public PasswordCheck(EditText view, String errorMsg) {
-               this.view = view;
+           public PasswordCheck(EditText editText, String errorMsg) {
+               this.editText = editText;
                this.errorMsg = errorMsg;
            }
 
@@ -78,7 +78,7 @@ FormAwareInterface
            }
            @Override
            protected TextView getView() {
-               return view;
+               return editText;
            }
            @Override
            public void setForm(FormInterface form) {

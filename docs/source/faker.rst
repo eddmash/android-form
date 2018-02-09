@@ -29,6 +29,6 @@ Lets populate our :ref:`basic form <basic_form>` form from earlier with sample d
     // you could also populate single field on its own
     populator.populate(form.getField("gender"));
 
-The kind of data that is generated depends on the type of view and the name of the field.
-e.g. if a view is edittext of with inputype of number then the populator will generated numbers
-for that particular view.
+The kind of data that is generated depends on the type of editText and the name of the field.
+e.g. if a editText is edittext of with inputype of number then the populator will generated numbers
+for that particular editText.

@@ -1,4 +1,4 @@
-.. java:import:: android.view View
+.. java:import:: android.editText View
 
 .. java:import:: android.widget EditText
 
@@ -43,6 +43,6 @@ Methods
 guess
 ^^^^^
 
-.. java:method:: public String guess(String name, View view) throws FakerException
+.. java:method:: public String guess(String name, View editText) throws FakerException
    :outertype: Guess
 
