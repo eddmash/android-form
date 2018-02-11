@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'android-maven'
 
-group='com.github.eddmash'
+group='com.github.eddmash.androidcomponents'
 
 ext {
     versionCode = 8
