@@ -21,10 +21,12 @@ public class RandomNumberProvider extends Provider {
 
     public RandomNumberProvider(PopulatorInterface populator) {
         super(populator);
+        type = INTEGER;
     }
 
     public RandomNumberProvider(PopulatorInterface populator, String format) {
         super(populator, format);
+        type = INTEGER;
     }
 
 

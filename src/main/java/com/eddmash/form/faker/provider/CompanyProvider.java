@@ -6,32 +6,32 @@ import com.eddmash.form.faker.PopulatorInterface;
 /**
  * Generate data that relates to companies.
  */
-public class Company extends Provider {
+public class CompanyProvider extends Provider {
     private String JOBTITLES = "jobtitles";
     private String NAME = "name";
     private String SUFFIX = "suffix";
 
     private String type = NAME;
 
-    public Company(PopulatorInterface populator) {
+    public CompanyProvider(PopulatorInterface populator) {
         super(populator);
     }
 
-    public Company(PopulatorInterface populator, String format) {
+    public CompanyProvider(PopulatorInterface populator, String format) {
         super(populator, format);
     }
 
-    public Company getCompany() {
+    public CompanyProvider getCompany() {
         type = NAME;
         return this;
     }
 
-    public Company getJobTitles() {
+    public CompanyProvider getJobTitles() {
         type = JOBTITLES;
         return this;
     }
 
-    public Company getCompanySuffix() {
+    public CompanyProvider getCompanySuffix() {
         type = SUFFIX;
         return this;
     }
