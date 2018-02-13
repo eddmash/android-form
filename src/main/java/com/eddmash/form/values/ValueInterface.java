@@ -1,6 +1,6 @@
 package com.eddmash.form.values;
 /*
-* This file is part of the Tools package.
+* This file is part of the androidcomponents package.
 * 
 * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
 *

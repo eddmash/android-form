@@ -1,6 +1,6 @@
 package com.eddmash.form.fields;
 /*
-* This file is part of the mfivms_malawi_registration_and package.
+* This file is part of the androidcomponents package.
 * 
 * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
 *
