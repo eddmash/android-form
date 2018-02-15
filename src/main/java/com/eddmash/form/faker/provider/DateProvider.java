@@ -19,7 +19,7 @@ public class DateProvider extends Provider {
     protected String timeFormat = "HH:mm:ss";
     public static final String TODAY = "today";
     public static final String TIME_NOW = "timeNow";
-    private String type;
+    private String type = TODAY;
 
     public DateProvider(PopulatorInterface populator) {
         super(populator);

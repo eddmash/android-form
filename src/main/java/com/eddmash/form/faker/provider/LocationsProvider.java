@@ -15,7 +15,7 @@ public class LocationsProvider extends Provider {
     public static final String CITY = "city";
     public static final String COUNTRY = "country";
     public static final String ADDRESS = "address";
-    private String type;
+    private String type=ADDRESS;
 
     public LocationsProvider(PopulatorInterface populator) {
         super(populator);

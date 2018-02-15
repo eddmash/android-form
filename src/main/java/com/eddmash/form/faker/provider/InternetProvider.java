@@ -15,7 +15,7 @@ public class InternetProvider extends Provider {
     private static final String EMAIL = "email";
     private static final String DOMAIN = "domain";
     private static final String TLD = "tld";
-    private String type;
+    private String type = DOMAIN;
 
     public InternetProvider(PopulatorInterface populator) {
         super(populator);
