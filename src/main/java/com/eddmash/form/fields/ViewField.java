@@ -111,21 +111,25 @@ public class ViewField extends BaseField<View, String> {
     public int getSpinnerValuePosition(Spinner spinner, Object val) {
         val = String.valueOf(val).toLowerCase();
         ValueInterface item;
-        for (int i = 0; i < spinner.getAdapter().getCount(); i++) {
+        try {
+            for (int i = 0; i < spinner.getAdapter().getCount(); i++) {
 
-            if (spinner.getAdapter().getItem(i) instanceof ValueInterface) {
-                item = (ValueInterface) spinner.getAdapter().getItem(i);
+                if (spinner.getAdapter().getItem(i) instanceof ValueInterface) {
+                    item = (ValueInterface) spinner.getAdapter().getItem(i);
 
-                if (item.getValue().toLowerCase().equals(val)) {
-                    return i;
+                    if (item.getValue().toLowerCase().equals(val)) {
+                        return i;
+                    }
+
                 }
-
-            }
-            if (spinner.getAdapter().getItem(i) instanceof String) {
-                if (((String) spinner.getAdapter().getItem(i)).toLowerCase().equals(val)) {
-                    return i;
+                if (spinner.getAdapter().getItem(i) instanceof String) {
+                    if (((String) spinner.getAdapter().getItem(i)).toLowerCase().equals(val)) {
+                        return i;
+                    }
                 }
             }
+        } catch (Exception e) {
+
         }
         return 0;
     }
