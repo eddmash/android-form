@@ -135,7 +135,12 @@ public class DummyDataPopulator implements PopulatorInterface {
         }
 
         if (field instanceof Spinner) {
-            int count = ((Spinner) field).getAdapter().getCount();
+            int count = 0;
+            try {
+                count = ((Spinner) field).getAdapter().getCount();
+            } catch (Exception e) {
+
+            }
             if (count == 1 || count == 0) {
                 return String.valueOf(0);
             }
