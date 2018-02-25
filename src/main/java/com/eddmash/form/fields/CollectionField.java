@@ -21,11 +21,11 @@ import java.util.Map;
 /**
  * Field that manipulates multiple individual views together.
  * <p>
- * Its important to note that the specific fields don't loose there individuality and the values
- * return will be values for each single view.
+ * Its important to note that the specific fields don't loose there
+ * individuality and the values return will be values for each single view.
  * <p>
- * Setting will be attempted on each single view if its value is found in the map of values
- * passed in.
+ * Setting will be attempted on each single view if its value is found in the
+ * map of values passed in.
  */
 public class CollectionField extends BaseField<List<View>, Object>
         implements CollectionFieldInterface<List<View>, Object> {
@@ -49,6 +49,7 @@ public class CollectionField extends BaseField<List<View>, Object>
 
     @Override
     public void addField(FieldInterface field) {
+        field.setForm(getForm());
         fields.put(field.getName(), field);
     }
 
@@ -56,6 +57,7 @@ public class CollectionField extends BaseField<List<View>, Object>
     public void addField(String name, View view, boolean editable) {
         ViewField field = new ViewField(name, view);
         field.setIsEditable(editable);
+        field.setForm(getForm());
         fields.put(name, field);
     }
 
@@ -94,8 +96,9 @@ public class CollectionField extends BaseField<List<View>, Object>
                 }
             }
         } else {
-            throw new FormException("Set value expects an instance of (List or Map) got :: "
-                    + o.getClass());
+            throw new FormException(
+                    "Set value expects an instance of (List or Map) got :: "
+                            + o.getClass());
         }
     }
 
