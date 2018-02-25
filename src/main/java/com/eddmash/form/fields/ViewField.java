@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.eddmash.form.FormException;
 import com.eddmash.form.values.ValueInterface;
-import com.eddmash.form.values.MapValue;
 import com.eddmash.views.CollectionView;
 
 public class ViewField extends BaseField<View, String> {
@@ -47,8 +46,8 @@ public class ViewField extends BaseField<View, String> {
         }
         if (view instanceof Spinner) {
             Object val = ((Spinner) view).getSelectedItem();
-            if (val instanceof MapValue) {
-                val = ((MapValue) val).getValue();
+            if (val instanceof ValueInterface) {
+                val = ((ValueInterface) val).getValue();
             } else {
                 val = val + "";
             }
