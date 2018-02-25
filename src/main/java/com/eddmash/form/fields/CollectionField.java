@@ -11,6 +11,7 @@ package com.eddmash.form.fields;
 import android.view.View;
 
 import com.eddmash.form.FormException;
+import com.eddmash.form.FormInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,5 +115,13 @@ public class CollectionField extends BaseField<List<View>, Object>
             views.add((View) field.getView());
         }
         return views;
+    }
+
+    @Override
+    public void setForm(FormInterface form) {
+        super.setForm(form);
+        for (FieldInterface field : fields.values()) {
+            field.setForm(getForm());
+        }
     }
 }
