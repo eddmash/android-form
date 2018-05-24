@@ -1,16 +1,17 @@
 package com.eddmash.form.fields;
 /*
-* This file is part of the androidcomponents package.
-* 
-* (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the androidcomponents package.
+ *
+ * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import android.view.View;
 
 import com.eddmash.form.FormException;
+import com.eddmash.form.NonViewValueInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,20 +19,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This fields deals with multi fields but they are each treated as one.
+ * This fields deals with multi views but they are each treated as one.
  * <p>
- * This mean the values return are for those fields that have values, the setting also happens to
- * those fields who data is provided.
+ * This mean the values returned are for those fields that have values, the setting also
+ * happens to those fields whose data is provided.
  */
-public class MultiField extends BaseField<List<View>, Map> implements MultiFieldInterface {
+public class MultiField extends BaseField<List<View>, Map>
+        implements MultiFieldInterface, NonViewValueInterface {
 
     private final String name;
     private Map<String, FieldInterface> fields;
+    private Map<String, Object> noViewValues;
 
     public MultiField(String name, boolean isEditable) {
         super(isEditable);
         this.name = name;
         fields = new HashMap<>();
+        noViewValues = new HashMap<>();
     }
 
     public MultiField(String name) {
@@ -65,7 +69,7 @@ public class MultiField extends BaseField<List<View>, Map> implements MultiField
 
     @Override
     public Map getValue() throws FormException {
-        Map values = new HashMap();
+        Map<String, Object> values = new HashMap<>(noViewValues);
         for (String v : fields.keySet()) {
             values.put(v, fields.get(v).getValue());
         }
@@ -99,5 +103,18 @@ public class MultiField extends BaseField<List<View>, Map> implements MultiField
     @Override
     public int getChildCount() {
         return fields.size();
+    }
+
+
+    @Override
+    public void addNonViewValue(String fieldName, Object value) {
+        noViewValues.put(fieldName, value);
+    }
+
+    @Override
+    public void removeNonViewValue(String fieldName) {
+        if (noViewValues.containsKey(fieldName)) {
+            noViewValues.remove(fieldName);
+        }
     }
 }

@@ -1,17 +1,18 @@
 package com.eddmash.form.fields;
 /*
-* This file is part of the androidcomponents package.
-* 
-* (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the androidcomponents package.
+ *
+ * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import android.view.View;
 
 import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
+import com.eddmash.form.NonViewValueInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,9 +30,10 @@ import java.util.Map;
  * map of values passed in.
  */
 public class CollectionField extends BaseField<List<View>, Object>
-        implements CollectionFieldInterface<List<View>, Object> {
+        implements CollectionFieldInterface<List<View>, Object>, NonViewValueInterface {
     private String name;
     private Map<String, FieldInterface> fields;
+    private Map<String, Object> noViewValues;
 
     public CollectionField(String tag) {
         this(tag, true);
@@ -40,6 +42,7 @@ public class CollectionField extends BaseField<List<View>, Object>
     public CollectionField(String name, boolean isEditable) {
         super(isEditable);
         this.name = name;
+        noViewValues = new HashMap<>();
         fields = new LinkedHashMap<>();
     }
 
@@ -69,7 +72,7 @@ public class CollectionField extends BaseField<List<View>, Object>
 
     @Override
     public Map<String, Object> getValue() throws FormException {
-        Map<String, Object> vals = new HashMap<>();
+        Map<String, Object> vals = new HashMap<>(noViewValues);
         for (String name : fields.keySet()) {
             vals.put(name, fields.get(name).getValue());
         }
@@ -124,4 +127,18 @@ public class CollectionField extends BaseField<List<View>, Object>
             field.setForm(getForm());
         }
     }
+
+
+    @Override
+    public void addNonViewValue(String fieldName, Object value) {
+        noViewValues.put(fieldName, value);
+    }
+
+    @Override
+    public void removeNonViewValue(String fieldName) {
+        if (noViewValues.containsKey(fieldName)) {
+            noViewValues.remove(fieldName);
+        }
+    }
+
 }

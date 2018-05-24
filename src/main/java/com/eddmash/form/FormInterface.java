@@ -1,12 +1,12 @@
 package com.eddmash.form;
 /*
-* This file is part of the androidcomponents package.
-* 
-* (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the androidcomponents package.
+ *
+ * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import android.view.View;
 
@@ -17,7 +17,7 @@ import com.eddmash.validation.checks.CheckInterface;
 import java.util.List;
 import java.util.Map;
 
-public interface FormInterface {
+public interface FormInterface extends NonViewValueInterface {
 
     /**
      * A unique identifier for this form.
@@ -68,15 +68,6 @@ public interface FormInterface {
      */
     Object getValue(String fieldName) throws FormException;
 
-
-    /**
-     * Set value for a specific.
-     *
-     * @param fieldName the identifier to use to locate the field being set.
-     * @param value     the value being set, this depends on specific  {@link FieldInterface field }
-     *                  .consult specific  {@link FieldInterface field } to find expected value.
-     */
-    void setValue(String fieldName, Object value);
 
     /**
      * This is the right place to perform form wide validations.

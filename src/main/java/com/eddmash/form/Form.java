@@ -1,12 +1,12 @@
 package com.eddmash.form;
 /*
-* This file is part of the androidcomponents package.
-* 
-* (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the androidcomponents package.
+ *
+ * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import android.util.Log;
 import android.view.View;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 public abstract class Form implements FormInterface {
     private Map data;
-    private Map<String, Object> extraFields;
+    private Map<String, Object> noViewValues;
     private ValidatorInterface validator;
     private Map<String, ArrayList<String>> orderMap;
     private Map<String, FieldInterface> fields;
@@ -43,7 +43,7 @@ public abstract class Form implements FormInterface {
         orderMap = new HashMap<>();
         fields = new HashMap<>();
         this.validator = validator;
-        extraFields = new HashMap<>();
+        noViewValues = new HashMap<>();
         try {
             setData(data);
         } catch (FormException e) {
@@ -88,7 +88,6 @@ public abstract class Form implements FormInterface {
         field.setForm(this);
         fields.put(colName, field);
     }
-
 
     @Override
     public void removeField(String colName) {
@@ -139,8 +138,8 @@ public abstract class Form implements FormInterface {
 
         Map<String, Object> values = new HashMap<>();
 
-        for (String key : extraFields.keySet()) {
-            values.put(key, extraFields.get(key));
+        for (String key : noViewValues.keySet()) {
+            values.put(key, noViewValues.get(key));
         }
 
         for (String fieldName : fields.keySet()) {
@@ -160,10 +159,16 @@ public abstract class Form implements FormInterface {
     }
 
     @Override
-    public void setValue(String fieldName, Object value) {
-        extraFields.put(fieldName, value);
+    public void addNonViewValue(String fieldName, Object value) {
+        noViewValues.put(fieldName, value);
     }
 
+    @Override
+    public void removeNonViewValue(String fieldName) {
+        if (noViewValues.containsKey(fieldName)) {
+            noViewValues.remove(fieldName);
+        }
+    }
 
     @Override
     public Map<String, List> getErrors() {
