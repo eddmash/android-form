@@ -16,7 +16,7 @@ public class SimpleField extends BaseField<Object, Object> {
     private Object value;
 
     public SimpleField(String name, Object value) {
-        this(name, value, true);
+        this(name, value, false);
     }
 
     public SimpleField(String name, Object value, boolean isEditable) {

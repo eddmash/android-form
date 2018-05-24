@@ -1,12 +1,12 @@
 package com.eddmash.form.faker;
 /*
-* This file is part of the androidcomponents package.
-* 
-* (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the androidcomponents package.
+ *
+ * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import android.util.Log;
 import android.view.View;
@@ -17,16 +17,11 @@ import android.widget.Spinner;
 import com.eddmash.form.FormException;
 import com.eddmash.form.FormInterface;
 import com.eddmash.form.faker.provider.ProviderInterface;
-import com.eddmash.form.fields.CollectionField;
-import com.eddmash.form.fields.MultiField;
-import com.eddmash.form.fields.MultiFieldInterface;
-import com.eddmash.form.fields.SimpleField;
-import com.eddmash.form.fields.ViewField;
+import com.eddmash.form.fields.CollectionFieldInterface;
 import com.eddmash.form.fields.FieldInterface;
-import com.eddmash.views.CollectionView;
+import com.eddmash.form.fields.MultiFieldInterface;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -71,70 +66,35 @@ public class DummyDataPopulator implements PopulatorInterface {
 
     public void populate(FieldInterface field) throws FormException {
         String val;
-        Log.e(
-                DummyDataPopulator.class.getSimpleName(),
-                "POPULATING :: " + field.getForm().getClass().getSimpleName()
-                        + "::" + field.getClass().getSimpleName()
-                        + " " + field.getName() + " Editable " + field
-                        .isEditable()
-        );
-        if (field.isEditable() && !(field instanceof SimpleField)) {
+        if (field.isEditable()) {
 
-            if (field instanceof ViewField) {
-                val = generateData(field.getName(), (View) field.getView());
-                field.setValue(val);
-            } else if (field instanceof CollectionField) {
+            if (field instanceof CollectionFieldInterface) {
 
-                Map<String, FieldInterface> collectionFields = (
-                        (CollectionField) field)
-                        .getFields();
+                Map<String, FieldInterface> collectionFields =
+                        ((CollectionFieldInterface) field).getFields();
                 for (FieldInterface cField : collectionFields.values()) {
-                    Log.e(
-                            DummyDataPopulator.class.getSimpleName(),
-                            cField.getClass().getSimpleName() + " " +
-                                    "::: cField ::: " + cField.getName()
-                    );
                     if (cField.isEditable()) {
-                        if (cField instanceof CollectionField) {
-                            populate(cField);
-                        } else if (!(cField instanceof SimpleField)) {
-                            cField.setValue(
-                                    generateData(
-                                            cField.getName(),
-                                            (View) cField.getView()
-                                    ));
-                        }
+                        populate(cField);
                     }
                 }
             } else if (field instanceof MultiFieldInterface) {
-
-                Log.e(
-                        getClass().getSimpleName(),
-                        field.getClass().getSimpleName() + " :: " +
-                                field.getName()
-                );
                 int i = 0;
-                MultiField multiField = ((MultiField) field);
-                int count = multiField.getChildCount();
+                MultiFieldInterface multiField = ((MultiFieldInterface) field);
 
-                Random rand = new Random();
-                int limit = rand.nextInt(count);
-                Log.e(
-                        getClass().getSimpleName(),
-                        field.getClass()
-                             .getSimpleName() + " found " + count + " LIMIT "
-                                + limit
-                );
-                FieldInterface innerField;
-                while (count > 0 && i < limit) {
+                for (FieldInterface innerField : multiField.getFields()) {
                     innerField = multiField.getFields().get(i);
-                    innerField.setValue(generateData(
-                            field.getName(),
-                            (View) innerField.getView()
-                    ));
+                    populate(innerField);
                     i++;
                 }
 
+            } else {
+                try {
+                    val = generateData(field.getName(), (View) field.getView());
+                    field.setValue(val);
+                } catch (FormException e) {
+                    e.printStackTrace();
+                    Log.e(getClass().getSimpleName(), e.getMessage());
+                }
             }
         }
     }
