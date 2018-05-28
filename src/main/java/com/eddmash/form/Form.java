@@ -126,7 +126,7 @@ public abstract class Form implements FormInterface {
                 if (data.containsKey(field.getName())) {
                     field.setValue(data.get(field.getName()));
                 }
-
+                //todo might need to be removed for consitency
                 if (field instanceof CollectionField) {
                     field.setValue(data);
                 }
@@ -136,11 +136,7 @@ public abstract class Form implements FormInterface {
 
     public Map<String, Object> getValues() throws FormException {
 
-        Map<String, Object> values = new HashMap<>();
-
-        for (String key : noViewValues.keySet()) {
-            values.put(key, noViewValues.get(key));
-        }
+        Map<String, Object> values = new HashMap<>(noViewValues);
 
         for (String fieldName : fields.keySet()) {
             values.put(fieldName, fields.get(fieldName).getValue());
