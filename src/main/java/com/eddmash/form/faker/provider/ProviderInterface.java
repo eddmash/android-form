@@ -34,6 +34,7 @@ public interface ProviderInterface {
 
     /**
      * Returns the generated value by the provider.
+     * It returns data that has been parsed into the format required.
      *
      * @return generated value
      * @param view this the view for which the data is being generated.

@@ -109,11 +109,6 @@ public abstract class Provider implements ProviderInterface {
         return new PersonProvider(populator).getFirstName(gender).getData(view);
     }
 
-    @Override
-    public String toString() {
-        return getData(null);
-    }
-
     protected String parseFormat(String format, Callback callback) {
         int repeat = format.split("#", -1).length;
 

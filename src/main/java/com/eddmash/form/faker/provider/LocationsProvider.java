@@ -128,7 +128,7 @@ public class LocationsProvider extends Provider {
             return "";
         }
         if (type.equals(ADDRESS)) {
-            return new RandomNumberProvider(populator, "####").getData();
+            return new RandomNumberProvider(populator, "####").getData(view);
         }
         try {
             return randomElement(countries());
