@@ -1,12 +1,12 @@
 package com.eddmash.form.faker;
 /*
-* This file is part of the androidcomponents package.
-* 
-* (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the androidcomponents package.
+ *
+ * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import android.view.View;
 import android.widget.EditText;
@@ -14,13 +14,13 @@ import android.widget.EditText;
 import com.eddmash.form.faker.provider.CoordinatesProvider;
 import com.eddmash.form.faker.provider.DateProvider;
 import com.eddmash.form.faker.provider.InternetProvider;
+import com.eddmash.form.faker.provider.LocationsProvider;
 import com.eddmash.form.faker.provider.LoremProvider;
 import com.eddmash.form.faker.provider.PersonProvider;
 import com.eddmash.form.faker.provider.ProviderInterface;
-import com.eddmash.views.DatePickerView;
-import com.eddmash.form.faker.provider.LocationsProvider;
 import com.eddmash.form.faker.provider.RandomNumberProvider;
 import com.eddmash.form.faker.provider.TelephoneProvider;
+import com.eddmash.views.DatePickerView;
 
 import static android.text.InputType.TYPE_CLASS_DATETIME;
 import static android.text.InputType.TYPE_CLASS_NUMBER;
@@ -47,7 +47,7 @@ class Guess {
         if (provider == null) {
             provider = guessByType(name, view);
         }
-        return provider.getData(view);
+        return String.valueOf(provider.getData(view));
     }
 
     /**

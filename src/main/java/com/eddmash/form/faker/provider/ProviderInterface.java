@@ -18,7 +18,7 @@ import android.view.View;
  * <p>
  * That is each method on the default providers is used a setter of the type of data to generate.
  */
-public interface ProviderInterface {
+public interface ProviderInterface<T> {
 
     /**
      * This should return the values the populator will use.
@@ -29,7 +29,7 @@ public interface ProviderInterface {
      * @return generated value
      * @param view this the view for which the data is being generated.
      */
-    String generate(View view);
+    T generate(View view);
 
 
     /**
@@ -39,5 +39,5 @@ public interface ProviderInterface {
      * @return generated value
      * @param view this the view for which the data is being generated.
      */
-    String getData(View view);
+    T getData(View view);
 }

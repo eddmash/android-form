@@ -1,12 +1,12 @@
 package com.eddmash.form.faker.provider;
 /*
-* This file is part of the androidcomponents package.
-* 
-* (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the androidcomponents package.
+ *
+ * (c) Eddilbert Macharia (http://eddmash.com)<edd.cowan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 import android.view.View;
 
@@ -25,7 +25,7 @@ import java.util.List;
  * <p>
  * Go to {@link ProviderInterface } to learn more.
  */
-public abstract class Provider implements ProviderInterface {
+public abstract class Provider implements ProviderInterface<String> {
     public static final String SEPARATOR = "\\.";
     public static final String PATTERN = "^([a-z]+)\\.([a-z]+)$";
     protected PopulatorInterface populator;
@@ -106,7 +106,8 @@ public abstract class Provider implements ProviderInterface {
         } catch (FakerException e) {
             e.printStackTrace();
         }
-        return new PersonProvider(populator).getFirstName(gender).getData(view);
+        return String.valueOf(new PersonProvider(populator)
+                .getFirstName(gender).getData(view));
     }
 
     protected String parseFormat(String format, Callback callback) {
