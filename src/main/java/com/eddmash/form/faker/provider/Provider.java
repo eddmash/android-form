@@ -8,6 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
+import android.view.View;
+
 import com.eddmash.form.faker.Callback;
 import com.eddmash.form.faker.FakerException;
 import com.eddmash.form.faker.PopulatorInterface;
@@ -97,19 +99,19 @@ public abstract class Provider implements ProviderInterface {
     }
 
 
-    public String getPersonName() {
+    public String getPersonName(View view) {
         String gender = "female";
         try {
             gender = randomElement(new String[]{PersonProvider.FEMALE, PersonProvider.MALE});
         } catch (FakerException e) {
             e.printStackTrace();
         }
-        return new PersonProvider(populator).getFirstName(gender).getData();
+        return new PersonProvider(populator).getFirstName(gender).getData(view);
     }
 
     @Override
     public String toString() {
-        return getData();
+        return getData(null);
     }
 
     protected String parseFormat(String format, Callback callback) {
@@ -124,11 +126,11 @@ public abstract class Provider implements ProviderInterface {
     }
 
     @Override
-    public String getData() {
+    public String getData(final View view) {
         return parseFormat(format, new Callback() {
             @Override
             public String invoke() {
-                return generate();
+                return generate(view);
             }
         });
     }

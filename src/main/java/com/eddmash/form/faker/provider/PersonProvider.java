@@ -8,6 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
+import android.view.View;
+
 import com.eddmash.form.faker.PopulatorInterface;
 
 public class PersonProvider extends Provider {
@@ -532,7 +534,7 @@ public class PersonProvider extends Provider {
     }
 
     @Override
-    public String generate() {
+    public String generate(View view) {
         String[] firstName;
         if (gender.equals(MALE)) {
             firstName = maleFirstNames();

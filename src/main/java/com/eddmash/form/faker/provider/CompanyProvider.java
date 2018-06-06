@@ -1,5 +1,7 @@
 package com.eddmash.form.faker.provider;
 
+import android.view.View;
+
 import com.eddmash.form.faker.FakerException;
 import com.eddmash.form.faker.PopulatorInterface;
 
@@ -37,7 +39,7 @@ public class CompanyProvider extends Provider {
     }
 
     @Override
-    public String generate() {
+    public String generate(View view) {
         if (type.equals(SUFFIX)) {
             return getSuffix();
         }
@@ -51,7 +53,7 @@ public class CompanyProvider extends Provider {
             return jobTitlesList()[0];
         }
 
-        return getPersonName()+ " " + getSuffix();
+        return getPersonName(view)+ " " + getSuffix();
 
     }
 

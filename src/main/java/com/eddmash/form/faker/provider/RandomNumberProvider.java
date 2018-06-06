@@ -8,7 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
-import com.eddmash.form.faker.Callback;
+import android.view.View;
+
 import com.eddmash.form.faker.PopulatorInterface;
 
 public class RandomNumberProvider extends Provider {
@@ -42,7 +43,7 @@ public class RandomNumberProvider extends Provider {
     }
 
     @Override
-    public String generate() {
+    public String generate(View view) {
         if (type.equals(DECIMAL)) {
             return String.valueOf(randomDouble(min, max));
 

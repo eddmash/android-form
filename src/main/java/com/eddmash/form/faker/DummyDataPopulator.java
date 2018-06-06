@@ -109,9 +109,9 @@ public class DummyDataPopulator implements PopulatorInterface {
             FormException {
         try {
             if (fieldPopulators.containsKey(fieldName)) {
-                return String.valueOf(fieldPopulators.get(fieldName).getData());
+                return String.valueOf(fieldPopulators.get(fieldName).getData(field));
             } else if (classPopulators.containsKey(field.getClass())) {
-                return String.valueOf(classPopulators.get(field.getClass()).getData());
+                return String.valueOf(classPopulators.get(field.getClass()).getData(field));
             }
         } catch (Exception e) {
             // just ignore this and continue proccessing

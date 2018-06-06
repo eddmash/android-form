@@ -47,7 +47,7 @@ class Guess {
         if (provider == null) {
             provider = guessByType(name, view);
         }
-        return provider.getData();
+        return provider.getData(view);
     }
 
     /**

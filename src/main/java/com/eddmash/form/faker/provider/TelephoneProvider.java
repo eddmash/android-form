@@ -8,6 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
+import android.view.View;
+
 import com.eddmash.form.faker.PopulatorInterface;
 
 public class TelephoneProvider extends Provider {
@@ -20,7 +22,7 @@ public class TelephoneProvider extends Provider {
         super(populator, format);
     }
 
-    public String generate() {
+    public String generate(View view) {
         return String.valueOf(randomInt(1, 9));
     }
 

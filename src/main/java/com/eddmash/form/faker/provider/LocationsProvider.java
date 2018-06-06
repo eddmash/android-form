@@ -8,6 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
+import android.view.View;
+
 import com.eddmash.form.faker.FakerException;
 import com.eddmash.form.faker.PopulatorInterface;
 
@@ -116,10 +118,10 @@ public class LocationsProvider extends Provider {
     }
 
     @Override
-    public String generate() {
+    public String generate(View view) {
         if (type.equals(CITY)) {
             try {
-                return getPersonName() + " " + randomElement(citySuffix());
+                return getPersonName(view) + " " + randomElement(citySuffix());
             } catch (FakerException e) {
                 e.printStackTrace();
             }

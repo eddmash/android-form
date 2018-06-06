@@ -8,6 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
+import android.view.View;
+
 import com.eddmash.form.faker.PopulatorInterface;
 
 import java.text.SimpleDateFormat;
@@ -58,7 +60,7 @@ public class DateProvider extends Provider {
     }
 
     @Override
-    public String generate() {
+    public String generate(View view) {
         if (type.equals(TIME_NOW)) {
             return makeDate(timeFormat);
         }

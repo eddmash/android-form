@@ -8,6 +8,8 @@ package com.eddmash.form.faker.provider;
 * file that was distributed with this source code.
 */
 
+import android.view.View;
+
 import com.eddmash.form.faker.FakerException;
 import com.eddmash.form.faker.PopulatorInterface;
 
@@ -42,9 +44,9 @@ public class InternetProvider extends Provider {
     }
 
 
-    public String generate() {
+    public String generate(View view) {
         if (type.equals(DOMAIN)) {
-            return getPersonName() + "." + this.getTld();
+            return getPersonName(view) + "." + this.getTld();
         }
         if (type.equals(TLD)) {
             try {
@@ -54,7 +56,7 @@ public class InternetProvider extends Provider {
             }
             return "com";
         }
-        return this.getPersonName() + "@" + this.getDomain();
+        return this.getPersonName(view) + "@" + this.getDomain();
     }
 
     private String[] tlds() {
