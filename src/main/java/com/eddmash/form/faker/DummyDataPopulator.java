@@ -43,11 +43,11 @@ public class DummyDataPopulator implements PopulatorInterface {
         guesser = new Guess(this);
     }
 
-    public void setFieldProvider(String name, ProviderInterface provider) {
+    public void setProvider(String name, ProviderInterface provider) {
         fieldPopulators.put(name, provider);
     }
 
-    public void setFieldProvider(Class clazz, ProviderInterface provider) {
+    public void setProvider(Class clazz, ProviderInterface provider) {
         classPopulators.put(clazz, provider);
     }
 
@@ -56,9 +56,7 @@ public class DummyDataPopulator implements PopulatorInterface {
 
             Log.e(
                     DummyDataPopulator.class.getName(),
-                    form.getClass().getName() +
-                            " ::: Loading  data ::: " + form.getFields()
-            );
+                    form.getClass().getName() + " ::: Loading  data ::: ");
 
             FieldInterface field;
 
@@ -108,15 +106,23 @@ public class DummyDataPopulator implements PopulatorInterface {
     private Object generateData(String fieldName, View field) throws
             FormException {
         try {
+            Log.e(getClass().getSimpleName(), fieldName + " HAS field populator " +
+                    fieldPopulators.containsKey(fieldName));
             if (fieldPopulators.containsKey(fieldName)) {
                 return fieldPopulators.get(fieldName).getData(field);
-            } else if (classPopulators.containsKey(field.getClass())) {
-                return classPopulators.get(field.getClass()).getData(field);
             }
         } catch (Exception e) {
             // just ignore this and continue proccessing
         }
-
+        try {
+            Log.e(getClass().getSimpleName(), fieldName + " HAS class populator " +
+                    classPopulators.containsKey(field.getClass()));
+            if (classPopulators.containsKey(field.getClass())) {
+                return classPopulators.get(field.getClass()).getData(field);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (field instanceof EditText) {
 
             try {

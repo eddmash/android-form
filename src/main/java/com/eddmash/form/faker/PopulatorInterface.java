@@ -26,7 +26,8 @@ public interface PopulatorInterface {
      * @param name     the name of the field that will use the provider given.
      * @param provider the provider to use instead of the default onces.
      */
-    void setFieldProvider(String name, ProviderInterface provider);
+    void setProvider(String name, ProviderInterface provider);
+    void setProvider(Class clazz, ProviderInterface provider);
 
     /**
      * Tell the populator to start the population on the specified form.
