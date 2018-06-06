@@ -93,9 +93,11 @@ public class DummyDataPopulator implements PopulatorInterface {
                 }
 
             } else {
+                Log.e(getClass().getSimpleName(), "FIELD :: " + field.getName() +
+                        " VIEW CLASS :: " + field.getClass().getName());
                 try {
                     field.setValue(generateData(field.getName(), (View) field.getView()));
-                } catch (FormException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(getClass().getSimpleName(), e.getMessage());
                 }
