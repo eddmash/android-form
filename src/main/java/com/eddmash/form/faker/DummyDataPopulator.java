@@ -103,13 +103,13 @@ public class DummyDataPopulator implements PopulatorInterface {
         }
     }
 
-    private String generateData(String fieldName, View field) throws
+    private Object generateData(String fieldName, View field) throws
             FormException {
         try {
             if (fieldPopulators.containsKey(fieldName)) {
-                return String.valueOf(fieldPopulators.get(fieldName).getData(field));
+                return fieldPopulators.get(fieldName).getData(field);
             } else if (classPopulators.containsKey(field.getClass())) {
-                return String.valueOf(classPopulators.get(field.getClass()).getData(field));
+                return classPopulators.get(field.getClass()).getData(field);
             }
         } catch (Exception e) {
             // just ignore this and continue proccessing
