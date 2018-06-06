@@ -34,15 +34,21 @@ public class DummyDataPopulator implements PopulatorInterface {
     private Guess guesser;
     private Map<String, ProviderInterface> fieldPopulators;
     private boolean populationComplete = false;
+    private Map<Class, ProviderInterface> classPopulators;
 
 
     public DummyDataPopulator() {
         fieldPopulators = new HashMap<>();
+        classPopulators = new HashMap<>();
         guesser = new Guess(this);
     }
 
     public void setFieldProvider(String name, ProviderInterface provider) {
         fieldPopulators.put(name, provider);
+    }
+
+    public void setFieldProvider(Class clazz, ProviderInterface provider) {
+        classPopulators.put(clazz, provider);
     }
 
     public void populate(FormInterface form) throws FormException {
@@ -101,17 +107,14 @@ public class DummyDataPopulator implements PopulatorInterface {
 
     private String generateData(String fieldName, View field) throws
             FormException {
-
-        if (fieldPopulators.containsKey(fieldName)) {
-            try {
+        try {
+            if (fieldPopulators.containsKey(fieldName)) {
                 return String.valueOf(fieldPopulators.get(fieldName).getData());
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(
-                        getClass().getName(),
-                        e.getMessage() + " :: Falling back to guessing"
-                );
+            } else if (classPopulators.containsKey(field.getClass())) {
+                return String.valueOf(classPopulators.get(field.getClass()).getData());
             }
+        } catch (Exception e) {
+            // just ignore this and continue proccessing
         }
 
         if (field instanceof EditText) {
