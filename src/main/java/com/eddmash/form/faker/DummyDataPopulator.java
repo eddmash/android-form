@@ -71,7 +71,6 @@ public class DummyDataPopulator implements PopulatorInterface {
     }
 
     public void populate(FieldInterface field) throws FormException {
-        String val;
         if (field.isEditable()) {
 
             if (field instanceof CollectionFieldInterface) {
@@ -95,8 +94,7 @@ public class DummyDataPopulator implements PopulatorInterface {
 
             } else {
                 try {
-                    val = generateData(field.getName(), (View) field.getView());
-                    field.setValue(val);
+                    field.setValue(generateData(field.getName(), (View) field.getView()));
                 } catch (FormException e) {
                     e.printStackTrace();
                     Log.e(getClass().getSimpleName(), e.getMessage());
