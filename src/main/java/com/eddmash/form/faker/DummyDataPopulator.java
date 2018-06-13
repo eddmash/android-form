@@ -123,6 +123,8 @@ public class DummyDataPopulator implements PopulatorInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Log.e(getClass().getSimpleName(), fieldName + " Trying to guess ");
         if (field instanceof EditText) {
 
             try {
